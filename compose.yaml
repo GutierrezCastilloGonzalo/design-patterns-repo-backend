@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    container_name: db-academic-repo
+    shm_size: 256mb
+    environment:
+      - 'POSTGRES_DB=academic_repo'
+      - 'POSTGRES_PASSWORD=academicpass'
+      - 'POSTGRES_USER=academicuser'
+    volumes:
+      - ../db-academic-data:/var/lib/postgresql/data
+    ports:
+      - '5435:5432'
