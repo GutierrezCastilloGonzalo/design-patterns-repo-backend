@@ -105,7 +105,22 @@ Protected endpoints require `Authorization: Bearer <token>` header.
 
 ## Database
 
-PostgreSQL with Flyway migrations. Connection details in `application-dev.properties`:
+PostgreSQL with Liquibase migrations. Connection details in `application-dev.properties`:
 - URL: `jdbc:postgresql://localhost:5435/academic_repo`
 - User: `academicuser`
 - Password: `academicpass`
+
+### Liquibase Commands
+
+```bash
+# Generate changelog from existing database
+mvnw.cmd liquibase:generateChangeLog
+
+# Generate diff when entities change (compare JPA entities vs DB)
+mvnw.cmd liquibase:diff
+
+# Mark all changesets as executed (without running them)
+mvnw.cmd liquibase:changelogSync
+```
+
+Changelogs are stored in `src/main/resources/db/changelog/changes/`.
