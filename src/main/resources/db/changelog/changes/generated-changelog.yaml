@@ -1,0 +1,690 @@
+databaseChangeLog:
+- changeSet:
+    id: 1769687287120-2
+    author: USER (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: is_active
+            type: BOOLEAN
+        - column:
+            constraints:
+              nullable: false
+            name: is_revoked
+            type: BOOLEAN
+        - column:
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: expires_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: sessions_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: refresh_expires_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: updated_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: user_id
+            type: BIGINT
+        - column:
+            name: ip_address
+            type: VARCHAR(45)
+        - column:
+            name: user_agent
+            type: VARCHAR(500)
+        - column:
+            constraints:
+              nullable: false
+            name: refresh_token
+            type: VARCHAR(512)
+        - column:
+            constraints:
+              nullable: false
+            name: token
+            type: VARCHAR(512)
+        tableName: sessions
+- changeSet:
+    id: 1769687287120-3
+    author: USER (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: is_active
+            type: BOOLEAN
+        - column:
+            name: number_of_pages
+            type: INTEGER
+        - column:
+            name: publication_date
+            type: date
+        - column:
+            name: advisor_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: collection_id
+            type: BIGINT
+        - column:
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: theses_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: updated_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: language
+            type: VARCHAR(50)
+        - column:
+            name: document_type
+            type: VARCHAR(100)
+        - column:
+            name: doi
+            type: VARCHAR(100)
+        - column:
+            name: license
+            type: VARCHAR(100)
+        - column:
+            name: file_url
+            type: VARCHAR(500)
+        - column:
+            constraints:
+              nullable: false
+            name: title
+            type: VARCHAR(500)
+        - column:
+            name: abstract_text
+            type: TEXT
+        tableName: theses
+- changeSet:
+    id: 1769687287120-4
+    author: USER (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: is_active
+            type: BOOLEAN
+        - column:
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: advisors_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: updated_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: orcid
+            type: VARCHAR(50)
+        - column:
+            constraints:
+              nullable: false
+            name: first_name
+            type: VARCHAR(100)
+        - column:
+            constraints:
+              nullable: false
+            name: last_name
+            type: VARCHAR(100)
+        - column:
+            name: title
+            type: VARCHAR(100)
+        - column:
+            name: department
+            type: VARCHAR(255)
+        - column:
+            name: email
+            type: VARCHAR(255)
+        tableName: advisors
+- changeSet:
+    id: 1769687287120-5
+    author: USER (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: is_active
+            type: BOOLEAN
+        - column:
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: authors_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: updated_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: orcid
+            type: VARCHAR(50)
+        - column:
+            constraints:
+              nullable: false
+            name: first_name
+            type: VARCHAR(100)
+        - column:
+            constraints:
+              nullable: false
+            name: last_name
+            type: VARCHAR(100)
+        - column:
+            name: affiliation
+            type: VARCHAR(255)
+        - column:
+            name: email
+            type: VARCHAR(255)
+        tableName: authors
+- changeSet:
+    id: 1769687287120-6
+    author: USER (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: is_active
+            type: BOOLEAN
+        - column:
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: communities_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: updated_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: logo_url
+            type: VARCHAR(500)
+        - column:
+            name: description
+            type: TEXT
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        tableName: communities
+- changeSet:
+    id: 1769687287120-7
+    author: USER (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: keyword_theses_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: keyword_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: thesis_id
+            type: BIGINT
+        tableName: keyword_theses
+- changeSet:
+    id: 1769687287120-8
+    author: USER (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: is_active
+            type: BOOLEAN
+        - column:
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: keywords_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: updated_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: word
+            type: VARCHAR(100)
+        tableName: keywords
+- changeSet:
+    id: 1769687287120-9
+    author: USER (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: order_number
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: author_id
+            type: BIGINT
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: thesis_authors_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: thesis_id
+            type: BIGINT
+        tableName: thesis_authors
+- changeSet:
+    id: 1769687287120-10
+    author: USER (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: is_active
+            type: BOOLEAN
+        - column:
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: users_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: updated_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: user_name
+            type: VARCHAR(100)
+        - column:
+            constraints:
+              nullable: false
+            name: email
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: password_hash
+            type: VARCHAR(255)
+        tableName: users
+- changeSet:
+    id: 1769687287120-12
+    author: USER (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: user_id
+        indexName: idx_sessions_user_id
+        tableName: sessions
+- changeSet:
+    id: 1769687287120-13
+    author: USER (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: expires_at
+        indexName: idx_sessions_expires_at
+        tableName: sessions
+- changeSet:
+    id: 1769687287120-14
+    author: USER (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: refresh_token
+        constraintName: sessions_refresh_token_key
+        tableName: sessions
+- changeSet:
+    id: 1769687287120-15
+    author: USER (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: token
+        constraintName: sessions_token_key
+        tableName: sessions
+- changeSet:
+    id: 1769687287120-16
+    author: USER (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: collection_id
+        indexName: idx_theses_collection_id
+        tableName: theses
+- changeSet:
+    id: 1769687287120-17
+    author: USER (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: advisor_id
+        indexName: idx_theses_advisor_id
+        tableName: theses
+- changeSet:
+    id: 1769687287120-18
+    author: USER (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: publication_date
+        indexName: idx_theses_publication_date
+        tableName: theses
+- changeSet:
+    id: 1769687287120-19
+    author: USER (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: email
+        constraintName: advisors_email_key
+        tableName: advisors
+- changeSet:
+    id: 1769687287120-20
+    author: USER (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: orcid
+        constraintName: advisors_orcid_key
+        tableName: advisors
+- changeSet:
+    id: 1769687287120-21
+    author: USER (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: email
+        constraintName: authors_email_key
+        tableName: authors
+- changeSet:
+    id: 1769687287120-22
+    author: USER (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: orcid
+        constraintName: authors_orcid_key
+        tableName: authors
+- changeSet:
+    id: 1769687287120-23
+    author: USER (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: communities_name_key
+        tableName: communities
+- changeSet:
+    id: 1769687287120-24
+    author: USER (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: thesis_id, keyword_id
+        constraintName: keyword_theses_thesis_id_keyword_id_key
+        tableName: keyword_theses
+- changeSet:
+    id: 1769687287120-25
+    author: USER (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: word
+        constraintName: keywords_word_key
+        tableName: keywords
+- changeSet:
+    id: 1769687287120-26
+    author: USER (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: thesis_id, author_id
+        constraintName: thesis_authors_thesis_id_author_id_key
+        tableName: thesis_authors
+- changeSet:
+    id: 1769687287120-27
+    author: USER (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: email
+        constraintName: users_email_key
+        tableName: users
+- changeSet:
+    id: 1769687287120-28
+    author: USER (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: user_name
+        constraintName: users_user_name_key
+        tableName: users
+- changeSet:
+    id: 1769687287120-29
+    author: USER (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: is_active
+            type: BOOLEAN
+        - column:
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: collections_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: subcommunity_id
+            type: BIGINT
+        - column:
+            name: updated_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: description
+            type: TEXT
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        tableName: collections
+- changeSet:
+    id: 1769687287120-30
+    author: USER (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: completion_date
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            name: publication_date
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: event_publication_pkey
+            name: id
+            type: UUID
+        - column:
+            name: event_type
+            type: VARCHAR(255)
+        - column:
+            name: listener_id
+            type: VARCHAR(255)
+        - column:
+            name: serialized_event
+            type: VARCHAR(255)
+        tableName: event_publication
+- changeSet:
+    id: 1769687287120-31
+    author: USER (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: is_active
+            type: BOOLEAN
+        - column:
+            constraints:
+              nullable: false
+            name: community_id
+            type: BIGINT
+        - column:
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: subcommunities_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: updated_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: description
+            type: TEXT
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        tableName: subcommunities
+- changeSet:
+    id: 1769687287120-32
+    author: USER (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: thesis_id
+        baseTableName: thesis_authors
+        constraintName: fk5spc1cqrppcepeloony2d9ena
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: theses
+        validate: true
+- changeSet:
+    id: 1769687287120-33
+    author: USER (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: thesis_id
+        baseTableName: keyword_theses
+        constraintName: fkbfeuvmuvyakgjv3ppw1j9cnw4
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: theses
+        validate: true
+- changeSet:
+    id: 1769687287120-34
+    author: USER (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: community_id
+        baseTableName: subcommunities
+        constraintName: fkdnt8qcm1efvvlprykm00vdgc
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: communities
+        validate: true
+- changeSet:
+    id: 1769687287120-35
+    author: USER (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: subcommunity_id
+        baseTableName: collections
+        constraintName: fkfpld95ktajopqn2g1kcte1y0v
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: subcommunities
+        validate: true
+- changeSet:
+    id: 1769687287120-36
+    author: USER (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: user_id
+        baseTableName: sessions
+        constraintName: fkruie73rneumyyd1bgo6qw8vjt
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: users
+        validate: true
+
