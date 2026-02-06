@@ -1,11 +1,9 @@
 package com.academicrepo.back.academic_repo.theses.domain.entities;
 
+import com.academicrepo.back.academic_repo.general.entities.domainEntities.BaseAbstractDomainEntity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.academicrepo.back.academic_repo.general.entities.domainEntities.BaseAbstractDomainEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

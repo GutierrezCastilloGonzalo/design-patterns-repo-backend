@@ -1,13 +1,11 @@
 package com.academicrepo.back.academic_repo.communities.application.queries.handlers;
 
-import org.springframework.stereotype.Service;
-
 import com.academicrepo.back.academic_repo.communities.application.queries.GetCommunityByIdQuery;
 import com.academicrepo.back.academic_repo.communities.domain.entities.DCommunity;
 import com.academicrepo.back.academic_repo.communities.domain.repositories.ICommunityRepository;
 import com.academicrepo.back.academic_repo.general.utils.exceptions.HttpExceptionUtils;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

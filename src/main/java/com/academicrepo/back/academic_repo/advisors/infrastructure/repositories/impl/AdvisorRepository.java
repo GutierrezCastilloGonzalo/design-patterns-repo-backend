@@ -1,16 +1,14 @@
 package com.academicrepo.back.academic_repo.advisors.infrastructure.repositories.impl;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
-
 import com.academicrepo.back.academic_repo.advisors.domain.entities.DAdvisor;
 import com.academicrepo.back.academic_repo.advisors.domain.repositories.IAdvisorRepository;
 import com.academicrepo.back.academic_repo.advisors.infrastructure.entities.Advisor;
 import com.academicrepo.back.academic_repo.advisors.infrastructure.mappers.AdvisorMapper;
 import com.academicrepo.back.academic_repo.advisors.infrastructure.repositories.interfaces.IAdvisorJpaRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor

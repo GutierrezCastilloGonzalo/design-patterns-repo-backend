@@ -1,5 +1,7 @@
 package com.academicrepo.back.academic_repo.config;
 
+import com.academicrepo.back.academic_repo.users.infrastructure.entities.User;
+import com.academicrepo.back.academic_repo.users.infrastructure.repositories.interfaces.IUserJpaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -7,13 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.academicrepo.back.academic_repo.users.infrastructure.entities.User;
-import com.academicrepo.back.academic_repo.users.infrastructure.repositories.interfaces.IUserJpaRepository;
-
 /**
- * Data seeder configuration for initializing default data on application
- * startup.
- * Creates a superadmin user if it doesn't already exist.
+ * Data seeder configuration for initializing default data on application startup. Creates a
+ * superadmin user if it doesn't already exist.
  */
 @Configuration
 public class DataSeeder {
@@ -25,7 +23,8 @@ public class DataSeeder {
     private static final String SUPERADMIN_PASSWORD = "SuperAdmin123!";
 
     @Bean
-    CommandLineRunner initSuperAdmin(IUserJpaRepository userRepository, PasswordEncoder passwordEncoder) {
+    CommandLineRunner initSuperAdmin(
+            IUserJpaRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
             if (userRepository.existsByEmail(SUPERADMIN_EMAIL)) {
                 logger.info("Superadmin user already exists, skipping seed.");
@@ -34,12 +33,13 @@ public class DataSeeder {
 
             logger.info("Creating superadmin user...");
 
-            User superadminUser = User.builder()
-                    .userName(SUPERADMIN_USERNAME)
-                    .email(SUPERADMIN_EMAIL)
-                    .passwordHash(passwordEncoder.encode(SUPERADMIN_PASSWORD))
-                    .isActive(true)
-                    .build();
+            User superadminUser =
+                    User.builder()
+                            .userName(SUPERADMIN_USERNAME)
+                            .email(SUPERADMIN_EMAIL)
+                            .passwordHash(passwordEncoder.encode(SUPERADMIN_PASSWORD))
+                            .isActive(true)
+                            .build();
 
             userRepository.save(superadminUser);
 

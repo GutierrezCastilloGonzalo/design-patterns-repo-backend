@@ -1,7 +1,11 @@
 package com.academicrepo.back.academic_repo.auth.infrastructure.config;
 
+import com.academicrepo.back.academic_repo.auth.application.services.CustomUserDetailsService;
+import com.academicrepo.back.academic_repo.auth.infrastructure.security.JwtAccessDeniedHandler;
+import com.academicrepo.back.academic_repo.auth.infrastructure.security.JwtAuthenticationEntryPoint;
+import com.academicrepo.back.academic_repo.auth.infrastructure.security.JwtAuthenticationFilter;
 import java.util.Arrays;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,13 +26,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.academicrepo.back.academic_repo.auth.application.services.CustomUserDetailsService;
-import com.academicrepo.back.academic_repo.auth.infrastructure.security.JwtAccessDeniedHandler;
-import com.academicrepo.back.academic_repo.auth.infrastructure.security.JwtAuthenticationEntryPoint;
-import com.academicrepo.back.academic_repo.auth.infrastructure.security.JwtAuthenticationFilter;
-
-import lombok.RequiredArgsConstructor;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
@@ -41,37 +38,44 @@ public class SecurityConfig {
     private final JwtAccessDeniedHandler accessDeniedHandler;
 
     private static final String[] PUBLIC_ENDPOINTS = {
-            "/v1/auth/**",
-            "/swagger-ui/**",
-            "/swagger-ui.html",
-            "/scalar/**",
-            "/scalar.html",
-            "/api-docs/**",
-            "/v3/api-docs/**",
-            "/swagger-resources/**",
-            "/webjars/**",
-            "/",
-            "/error",
-            "/actuator/health"
+        "/v1/auth/**",
+        "/swagger-ui/**",
+        "/swagger-ui.html",
+        "/scalar/**",
+        "/scalar.html",
+        "/api-docs/**",
+        "/v3/api-docs/**",
+        "/swagger-resources/**",
+        "/webjars/**",
+        "/",
+        "/error",
+        "/actuator/health"
     };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(authenticationEntryPoint)
-                        .accessDeniedHandler(accessDeniedHandler))
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
-                        .requestMatchers(HttpMethod.POST, "/v1/users").permitAll()
-                        .anyRequest().authenticated())
+                .exceptionHandling(
+                        exception ->
+                                exception
+                                        .authenticationEntryPoint(authenticationEntryPoint)
+                                        .accessDeniedHandler(accessDeniedHandler))
+                .sessionManagement(
+                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(
+                        auth ->
+                                auth.requestMatchers(HttpMethod.OPTIONS, "/**")
+                                        .permitAll()
+                                        .requestMatchers(PUBLIC_ENDPOINTS)
+                                        .permitAll()
+                                        .requestMatchers(HttpMethod.POST, "/v1/users")
+                                        .permitAll()
+                                        .anyRequest()
+                                        .authenticated())
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(
+                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -82,7 +86,8 @@ public class SecurityConfig {
         config.setAllowCredentials(true);
         config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:4200"));
         config.setAllowedHeaders(
-                Arrays.asList("Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
+                Arrays.asList(
+                        "Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setExposedHeaders(Arrays.asList("Authorization"));
         config.setMaxAge(3600L);
@@ -100,7 +105,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
+            throws Exception {
         return config.getAuthenticationManager();
     }
 

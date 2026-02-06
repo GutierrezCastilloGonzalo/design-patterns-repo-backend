@@ -1,7 +1,6 @@
 package com.academicrepo.back.academic_repo.collections.domain.entities;
 
 import com.academicrepo.back.academic_repo.general.entities.domainEntities.BaseAbstractDomainEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

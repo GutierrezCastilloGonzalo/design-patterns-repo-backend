@@ -2,7 +2,6 @@ package com.academicrepo.back.academic_repo.collections.infrastructure.entities;
 
 import com.academicrepo.back.academic_repo.general.entities.repositoryEntities.BaseAbstractEntity;
 import com.academicrepo.back.academic_repo.subcommunities.infrastructure.entities.Subcommunity;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

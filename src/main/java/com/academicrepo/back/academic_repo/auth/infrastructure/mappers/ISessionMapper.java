@@ -5,5 +5,6 @@ import com.academicrepo.back.academic_repo.auth.infrastructure.entities.Session;
 
 public interface ISessionMapper {
     Session toPersistence(DSession domainSession);
+
     DSession toDomain(Session persistenceSession);
 }

@@ -1,7 +1,6 @@
 package com.academicrepo.back.academic_repo.general.entities.domainEntities;
 
 import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

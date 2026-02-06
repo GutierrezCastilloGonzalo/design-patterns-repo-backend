@@ -1,11 +1,9 @@
 package com.academicrepo.back.academic_repo.users.infrastructure.mappers;
 
-import java.util.Optional;
-
-import org.springframework.stereotype.Component;
-
 import com.academicrepo.back.academic_repo.users.domain.entities.DUser;
 import com.academicrepo.back.academic_repo.users.infrastructure.entities.User;
+import java.util.Optional;
+import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper implements IUserMapper {
@@ -17,7 +15,8 @@ public class UserMapper implements IUserMapper {
         }
 
         User.UserBuilder<?, ?> userBuilder = User.builder();
-        userBuilder.userName(domainUser.getUserName() != null ? domainUser.getUserName().orElse(null) : null);
+        userBuilder.userName(
+                domainUser.getUserName() != null ? domainUser.getUserName().orElse(null) : null);
         userBuilder.email(domainUser.getEmail());
         userBuilder.passwordHash(domainUser.getPasswordHash());
 

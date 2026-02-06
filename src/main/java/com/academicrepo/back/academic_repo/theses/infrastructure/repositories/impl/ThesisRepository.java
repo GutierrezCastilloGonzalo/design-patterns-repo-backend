@@ -1,12 +1,5 @@
 package com.academicrepo.back.academic_repo.theses.infrastructure.repositories.impl;
 
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
-
 import com.academicrepo.back.academic_repo.theses.domain.entities.DThesis;
 import com.academicrepo.back.academic_repo.theses.domain.repositories.IThesisRepository;
 import com.academicrepo.back.academic_repo.theses.infrastructure.entities.KeyWordThesis;
@@ -16,8 +9,12 @@ import com.academicrepo.back.academic_repo.theses.infrastructure.mappers.ThesisM
 import com.academicrepo.back.academic_repo.theses.infrastructure.repositories.interfaces.IKeyWordThesisJpaRepository;
 import com.academicrepo.back.academic_repo.theses.infrastructure.repositories.interfaces.IThesisAuthorJpaRepository;
 import com.academicrepo.back.academic_repo.theses.infrastructure.repositories.interfaces.IThesisJpaRepository;
-
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
@@ -54,24 +51,28 @@ public class ThesisRepository implements IThesisRepository {
     private void saveRelations(Long thesisId, List<Long> authorIds, List<Long> keywordIds) {
         if (authorIds != null && !authorIds.isEmpty()) {
             AtomicInteger order = new AtomicInteger(1);
-            authorIds.forEach(authorId -> {
-                ThesisAuthor ta = ThesisAuthor.builder()
-                    .thesisId(thesisId)
-                    .authorId(authorId)
-                    .orderNumber(order.getAndIncrement())
-                    .build();
-                thesisAuthorRepository.save(ta);
-            });
+            authorIds.forEach(
+                    authorId -> {
+                        ThesisAuthor ta =
+                                ThesisAuthor.builder()
+                                        .thesisId(thesisId)
+                                        .authorId(authorId)
+                                        .orderNumber(order.getAndIncrement())
+                                        .build();
+                        thesisAuthorRepository.save(ta);
+                    });
         }
 
         if (keywordIds != null && !keywordIds.isEmpty()) {
-            keywordIds.forEach(keywordId -> {
-                KeyWordThesis kwt = KeyWordThesis.builder()
-                    .thesisId(thesisId)
-                    .keywordId(keywordId)
-                    .build();
-                keyWordThesisRepository.save(kwt);
-            });
+            keywordIds.forEach(
+                    keywordId -> {
+                        KeyWordThesis kwt =
+                                KeyWordThesis.builder()
+                                        .thesisId(thesisId)
+                                        .keywordId(keywordId)
+                                        .build();
+                        keyWordThesisRepository.save(kwt);
+                    });
         }
     }
 
@@ -87,12 +88,16 @@ public class ThesisRepository implements IThesisRepository {
 
     @Override
     public Page<DThesis> findByCollectionId(Long collectionId, Pageable pageConfig) {
-        return jpaRepository.findByCollectionIdAndIsActiveTrue(collectionId, pageConfig).map(mapper::toDomain);
+        return jpaRepository
+                .findByCollectionIdAndIsActiveTrue(collectionId, pageConfig)
+                .map(mapper::toDomain);
     }
 
     @Override
     public Page<DThesis> findByAdvisorId(Long advisorId, Pageable pageConfig) {
-        return jpaRepository.findByAdvisorIdAndIsActiveTrue(advisorId, pageConfig).map(mapper::toDomain);
+        return jpaRepository
+                .findByAdvisorIdAndIsActiveTrue(advisorId, pageConfig)
+                .map(mapper::toDomain);
     }
 
     @Override

@@ -1,9 +1,8 @@
 package com.academicrepo.back.academic_repo.collections.infrastructure.mappers;
 
-import org.springframework.stereotype.Component;
-
 import com.academicrepo.back.academic_repo.collections.domain.entities.DCollection;
 import com.academicrepo.back.academic_repo.collections.infrastructure.entities.Collection;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CollectionMapper {

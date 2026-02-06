@@ -1,7 +1,6 @@
 package com.academicrepo.back.academic_repo.advisors.infrastructure.entities;
 
 import com.academicrepo.back.academic_repo.general.entities.repositoryEntities.BaseAbstractEntity;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

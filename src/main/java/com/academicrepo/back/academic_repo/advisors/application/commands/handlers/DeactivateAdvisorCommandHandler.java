@@ -1,14 +1,12 @@
 package com.academicrepo.back.academic_repo.advisors.application.commands.handlers;
 
-import org.springframework.stereotype.Service;
-
 import com.academicrepo.back.academic_repo.advisors.application.commands.DeactivateAdvisorCommand;
 import com.academicrepo.back.academic_repo.advisors.domain.entities.DAdvisor;
 import com.academicrepo.back.academic_repo.advisors.domain.repositories.IAdvisorRepository;
 import com.academicrepo.back.academic_repo.general.utils.exceptions.HttpExceptionUtils;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

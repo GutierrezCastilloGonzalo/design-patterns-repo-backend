@@ -26,6 +26,12 @@ docker-compose up -d
 
 # Compile only (no tests)
 ./mvnw compile
+
+# Format all Java files (Spotless + google-java-format AOSP)
+./mvnw spotless:apply
+
+# Check formatting without modifying files
+./mvnw spotless:check
 ```
 
 On Windows, use `mvnw.cmd` instead of `./mvnw`.

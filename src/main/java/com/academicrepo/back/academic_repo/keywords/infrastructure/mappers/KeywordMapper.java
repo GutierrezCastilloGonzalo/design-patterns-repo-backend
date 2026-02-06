@@ -1,9 +1,8 @@
 package com.academicrepo.back.academic_repo.keywords.infrastructure.mappers;
 
-import org.springframework.stereotype.Component;
-
 import com.academicrepo.back.academic_repo.keywords.domain.entities.DKeyword;
 import com.academicrepo.back.academic_repo.keywords.infrastructure.entities.Keyword;
+import org.springframework.stereotype.Component;
 
 @Component
 public class KeywordMapper {
