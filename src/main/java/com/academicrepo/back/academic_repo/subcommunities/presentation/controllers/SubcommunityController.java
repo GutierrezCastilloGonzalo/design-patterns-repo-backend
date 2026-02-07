@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/subcommunities")
+@RequestMapping("/v1/subcommunities")
 @RequiredArgsConstructor
 @Tag(name = "Subcommunities", description = "Gestión de subcomunidades")
 @SecurityRequirement(name = "bearerAuth")

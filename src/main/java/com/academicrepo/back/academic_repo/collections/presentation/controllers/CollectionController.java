@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/collections")
+@RequestMapping("/v1/collections")
 @RequiredArgsConstructor
 @Tag(name = "Collections", description = "Gestion de colecciones")
 @SecurityRequirement(name = "bearerAuth")

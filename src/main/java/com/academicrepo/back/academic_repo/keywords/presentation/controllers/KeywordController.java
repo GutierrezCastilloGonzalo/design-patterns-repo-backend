@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/keywords")
+@RequestMapping("/v1/keywords")
 @RequiredArgsConstructor
 @Tag(name = "Keywords", description = "Gestion de palabras clave")
 @SecurityRequirement(name = "bearerAuth")

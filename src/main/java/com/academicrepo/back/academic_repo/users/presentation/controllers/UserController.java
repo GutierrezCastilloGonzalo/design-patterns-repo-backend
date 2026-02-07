@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/v1/users")
 @Tag(name = "Users", description = "Endpoints para el manejo de usuarios")
 public class UserController extends BaseV1Controller {
 

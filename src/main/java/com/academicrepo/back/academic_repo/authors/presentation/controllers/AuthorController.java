@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/authors")
+@RequestMapping("/v1/authors")
 @RequiredArgsConstructor
 @Tag(name = "Authors", description = "Gestion de autores")
 @SecurityRequirement(name = "bearerAuth")

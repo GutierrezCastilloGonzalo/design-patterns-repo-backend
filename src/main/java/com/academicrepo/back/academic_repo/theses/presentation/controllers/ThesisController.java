@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/theses")
+@RequestMapping("/v1/theses")
 @RequiredArgsConstructor
 @Tag(name = "Theses", description = "Gestión de tesis")
 @SecurityRequirement(name = "bearerAuth")
