@@ -1,17 +1,14 @@
 package com.academicrepo.back.academic_repo.auth.domain.entities;
 
+import com.academicrepo.back.academic_repo.users.domain.entities.DUser;
 import java.util.Collection;
 import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.academicrepo.back.academic_repo.users.domain.entities.DUser;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
 @AllArgsConstructor

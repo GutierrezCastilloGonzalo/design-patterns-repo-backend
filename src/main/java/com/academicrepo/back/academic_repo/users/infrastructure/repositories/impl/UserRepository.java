@@ -1,14 +1,13 @@
 package com.academicrepo.back.academic_repo.users.infrastructure.repositories.impl;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
-
 import com.academicrepo.back.academic_repo.users.domain.entities.DUser;
 import com.academicrepo.back.academic_repo.users.domain.repositories.IUserRepository;
 import com.academicrepo.back.academic_repo.users.infrastructure.entities.User;
 import com.academicrepo.back.academic_repo.users.infrastructure.mappers.UserMapper;
 import com.academicrepo.back.academic_repo.users.infrastructure.repositories.interfaces.IUserJpaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserRepository implements IUserRepository {
@@ -41,7 +40,10 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public DUser findByEmail(String email) {
-        return jpaRepository.findByEmailAndIsActiveTrue(email).map(this.mapper::toDomain).orElse(null);
+        return jpaRepository
+                .findByEmailAndIsActiveTrue(email)
+                .map(this.mapper::toDomain)
+                .orElse(null);
     }
 
     @Override

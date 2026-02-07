@@ -1,14 +1,12 @@
 package com.academicrepo.back.academic_repo.subcommunities.application.commands.handlers;
 
-import org.springframework.stereotype.Service;
-
 import com.academicrepo.back.academic_repo.general.utils.exceptions.HttpExceptionUtils;
 import com.academicrepo.back.academic_repo.subcommunities.application.commands.UpdateSubcommunityCommand;
 import com.academicrepo.back.academic_repo.subcommunities.domain.entities.DSubcommunity;
 import com.academicrepo.back.academic_repo.subcommunities.domain.repositories.ISubcommunityRepository;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -21,13 +19,16 @@ public class UpdateSubcommunityCommandHandler {
         try {
             DSubcommunity existing = repository.findById(command.id());
             if (existing == null) {
-                throw new IllegalArgumentException("Subcomunidad no encontrada con ID: " + command.id());
+                throw new IllegalArgumentException(
+                        "Subcomunidad no encontrada con ID: " + command.id());
             }
 
             if (command.dto().getName() != null) {
-                if (!existing.getName().equals(command.dto().getName()) &&
-                    repository.existsByNameAndCommunityId(command.dto().getName(), existing.getCommunityId())) {
-                    throw new IllegalArgumentException("Ya existe una subcomunidad con ese nombre en esta comunidad");
+                if (!existing.getName().equals(command.dto().getName())
+                        && repository.existsByNameAndCommunityId(
+                                command.dto().getName(), existing.getCommunityId())) {
+                    throw new IllegalArgumentException(
+                            "Ya existe una subcomunidad con ese nombre en esta comunidad");
                 }
                 existing.setName(command.dto().getName());
             }

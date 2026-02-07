@@ -1,10 +1,8 @@
 package com.academicrepo.back.academic_repo.auth.domain.entities;
 
+import com.academicrepo.back.academic_repo.general.entities.domainEntities.BaseAbstractDomainEntity;
 import java.time.LocalDateTime;
 import java.util.Optional;
-
-import com.academicrepo.back.academic_repo.general.entities.domainEntities.BaseAbstractDomainEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

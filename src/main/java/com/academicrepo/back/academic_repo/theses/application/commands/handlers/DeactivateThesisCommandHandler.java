@@ -1,14 +1,12 @@
 package com.academicrepo.back.academic_repo.theses.application.commands.handlers;
 
-import org.springframework.stereotype.Service;
-
 import com.academicrepo.back.academic_repo.general.utils.exceptions.HttpExceptionUtils;
 import com.academicrepo.back.academic_repo.theses.application.commands.DeactivateThesisCommand;
 import com.academicrepo.back.academic_repo.theses.domain.entities.DThesis;
 import com.academicrepo.back.academic_repo.theses.domain.repositories.IThesisRepository;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

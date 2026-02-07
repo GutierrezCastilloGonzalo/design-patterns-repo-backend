@@ -1,9 +1,8 @@
 package com.academicrepo.back.academic_repo.advisors.infrastructure.mappers;
 
-import org.springframework.stereotype.Component;
-
 import com.academicrepo.back.academic_repo.advisors.domain.entities.DAdvisor;
 import com.academicrepo.back.academic_repo.advisors.infrastructure.entities.Advisor;
+import org.springframework.stereotype.Component;
 
 @Component
 public class AdvisorMapper {

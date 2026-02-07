@@ -1,14 +1,12 @@
 package com.academicrepo.back.academic_repo.collections.application.commands.handlers;
 
-import org.springframework.stereotype.Service;
-
 import com.academicrepo.back.academic_repo.collections.application.commands.DeactivateCollectionCommand;
 import com.academicrepo.back.academic_repo.collections.domain.entities.DCollection;
 import com.academicrepo.back.academic_repo.collections.domain.repositories.ICollectionRepository;
 import com.academicrepo.back.academic_repo.general.utils.exceptions.HttpExceptionUtils;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +19,8 @@ public class DeactivateCollectionCommandHandler {
         try {
             DCollection existing = repository.findById(command.id());
             if (existing == null) {
-                throw new IllegalArgumentException("Coleccion no encontrada con ID: " + command.id());
+                throw new IllegalArgumentException(
+                        "Coleccion no encontrada con ID: " + command.id());
             }
 
             existing.setIsActive(false);

@@ -1,11 +1,6 @@
 package com.academicrepo.back.academic_repo.theses.infrastructure.entities;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-
 import com.academicrepo.back.academic_repo.general.entities.repositoryEntities.BaseAbstractEntity;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +8,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,11 +18,13 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Table(name = "theses", indexes = {
-    @Index(name = "idx_theses_collection_id", columnList = "collection_id"),
-    @Index(name = "idx_theses_advisor_id", columnList = "advisor_id"),
-    @Index(name = "idx_theses_publication_date", columnList = "publication_date")
-})
+@Table(
+        name = "theses",
+        indexes = {
+            @Index(name = "idx_theses_collection_id", columnList = "collection_id"),
+            @Index(name = "idx_theses_advisor_id", columnList = "advisor_id"),
+            @Index(name = "idx_theses_publication_date", columnList = "publication_date")
+        })
 @Getter
 @Setter
 @AllArgsConstructor
@@ -66,10 +66,18 @@ public class Thesis extends BaseAbstractEntity {
     private Long advisorId;
 
     @lombok.Builder.Default
-    @OneToMany(mappedBy = "thesis", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(
+            mappedBy = "thesis",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
     private Set<ThesisAuthor> thesisAuthors = new HashSet<>();
 
     @lombok.Builder.Default
-    @OneToMany(mappedBy = "thesis", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(
+            mappedBy = "thesis",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
     private Set<KeyWordThesis> keyWordTheses = new HashSet<>();
 }

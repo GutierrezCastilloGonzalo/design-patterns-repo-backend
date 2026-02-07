@@ -1,16 +1,14 @@
 package com.academicrepo.back.academic_repo.communities.infrastructure.repositories.impl;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
-
 import com.academicrepo.back.academic_repo.communities.domain.entities.DCommunity;
 import com.academicrepo.back.academic_repo.communities.domain.repositories.ICommunityRepository;
 import com.academicrepo.back.academic_repo.communities.infrastructure.entities.Community;
 import com.academicrepo.back.academic_repo.communities.infrastructure.mappers.CommunityMapper;
 import com.academicrepo.back.academic_repo.communities.infrastructure.repositories.interfaces.ICommunityJpaRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor

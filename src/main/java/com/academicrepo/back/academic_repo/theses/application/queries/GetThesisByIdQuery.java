@@ -1,4 +1,3 @@
 package com.academicrepo.back.academic_repo.theses.application.queries;
 
-public record GetThesisByIdQuery(Long id) {
-}
+public record GetThesisByIdQuery(Long id) {}

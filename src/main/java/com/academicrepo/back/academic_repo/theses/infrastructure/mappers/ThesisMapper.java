@@ -1,18 +1,15 @@
 package com.academicrepo.back.academic_repo.theses.infrastructure.mappers;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Component;
-
 import com.academicrepo.back.academic_repo.theses.domain.entities.DThesis;
 import com.academicrepo.back.academic_repo.theses.infrastructure.entities.KeyWordThesis;
 import com.academicrepo.back.academic_repo.theses.infrastructure.entities.Thesis;
 import com.academicrepo.back.academic_repo.theses.infrastructure.entities.ThesisAuthor;
 import com.academicrepo.back.academic_repo.theses.infrastructure.repositories.interfaces.IKeyWordThesisJpaRepository;
 import com.academicrepo.back.academic_repo.theses.infrastructure.repositories.interfaces.IThesisAuthorJpaRepository;
-
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
@@ -67,15 +64,15 @@ public class ThesisMapper {
 
         // Load author IDs
         List<ThesisAuthor> thesisAuthors = thesisAuthorRepository.findByThesisId(entity.getId());
-        domain.setAuthorIds(thesisAuthors.stream()
-            .map(ThesisAuthor::getAuthorId)
-            .collect(Collectors.toList()));
+        domain.setAuthorIds(
+                thesisAuthors.stream().map(ThesisAuthor::getAuthorId).collect(Collectors.toList()));
 
         // Load keyword IDs
         List<KeyWordThesis> keyWordTheses = keyWordThesisRepository.findByThesisId(entity.getId());
-        domain.setKeywordIds(keyWordTheses.stream()
-            .map(KeyWordThesis::getKeywordId)
-            .collect(Collectors.toList()));
+        domain.setKeywordIds(
+                keyWordTheses.stream()
+                        .map(KeyWordThesis::getKeywordId)
+                        .collect(Collectors.toList()));
 
         return domain;
     }

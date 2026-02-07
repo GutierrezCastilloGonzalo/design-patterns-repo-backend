@@ -1,9 +1,8 @@
 package com.academicrepo.back.academic_repo.authors.infrastructure.mappers;
 
-import org.springframework.stereotype.Component;
-
 import com.academicrepo.back.academic_repo.authors.domain.entities.DAuthor;
 import com.academicrepo.back.academic_repo.authors.infrastructure.entities.Author;
+import org.springframework.stereotype.Component;
 
 @Component
 public class AuthorMapper {

@@ -1,11 +1,9 @@
 package com.academicrepo.back.academic_repo.auth.infrastructure.mappers;
 
-import java.util.Optional;
-
-import org.springframework.stereotype.Component;
-
 import com.academicrepo.back.academic_repo.auth.domain.entities.DSession;
 import com.academicrepo.back.academic_repo.auth.infrastructure.entities.Session;
+import java.util.Optional;
+import org.springframework.stereotype.Component;
 
 @Component
 public class SessionMapper implements ISessionMapper {
@@ -22,8 +20,14 @@ public class SessionMapper implements ISessionMapper {
         builder.refreshToken(domainSession.getRefreshToken());
         builder.expiresAt(domainSession.getExpiresAt());
         builder.refreshExpiresAt(domainSession.getRefreshExpiresAt());
-        builder.userAgent(domainSession.getUserAgent() != null ? domainSession.getUserAgent().orElse(null) : null);
-        builder.ipAddress(domainSession.getIpAddress() != null ? domainSession.getIpAddress().orElse(null) : null);
+        builder.userAgent(
+                domainSession.getUserAgent() != null
+                        ? domainSession.getUserAgent().orElse(null)
+                        : null);
+        builder.ipAddress(
+                domainSession.getIpAddress() != null
+                        ? domainSession.getIpAddress().orElse(null)
+                        : null);
         builder.isRevoked(domainSession.getIsRevoked());
 
         if (domainSession.getId() != null) {

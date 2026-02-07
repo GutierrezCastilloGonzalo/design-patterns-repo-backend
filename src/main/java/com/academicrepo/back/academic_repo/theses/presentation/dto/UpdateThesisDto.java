@@ -1,9 +1,8 @@
 package com.academicrepo.back.academic_repo.theses.presentation.dto;
 
+import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
-
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

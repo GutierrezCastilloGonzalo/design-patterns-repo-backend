@@ -1,16 +1,14 @@
 package com.academicrepo.back.academic_repo.collections.infrastructure.repositories.impl;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
-
 import com.academicrepo.back.academic_repo.collections.domain.entities.DCollection;
 import com.academicrepo.back.academic_repo.collections.domain.repositories.ICollectionRepository;
 import com.academicrepo.back.academic_repo.collections.infrastructure.entities.Collection;
 import com.academicrepo.back.academic_repo.collections.infrastructure.mappers.CollectionMapper;
 import com.academicrepo.back.academic_repo.collections.infrastructure.repositories.interfaces.ICollectionJpaRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
@@ -45,7 +43,9 @@ public class CollectionRepository implements ICollectionRepository {
 
     @Override
     public Page<DCollection> findBySubcommunityId(Long subcommunityId, Pageable pageConfig) {
-        return jpaRepository.findBySubcommunityIdAndIsActiveTrue(subcommunityId, pageConfig).map(mapper::toDomain);
+        return jpaRepository
+                .findBySubcommunityIdAndIsActiveTrue(subcommunityId, pageConfig)
+                .map(mapper::toDomain);
     }
 
     @Override

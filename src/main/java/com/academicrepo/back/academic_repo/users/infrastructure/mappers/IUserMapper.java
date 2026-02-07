@@ -5,5 +5,6 @@ import com.academicrepo.back.academic_repo.users.infrastructure.entities.User;
 
 public interface IUserMapper {
     User toPersistence(DUser domainUser);
+
     DUser toDomain(User persistenceUser);
 }

@@ -1,14 +1,12 @@
 package com.academicrepo.back.academic_repo.collections.application.commands.handlers;
 
-import org.springframework.stereotype.Service;
-
 import com.academicrepo.back.academic_repo.collections.application.commands.UpdateCollectionCommand;
 import com.academicrepo.back.academic_repo.collections.domain.entities.DCollection;
 import com.academicrepo.back.academic_repo.collections.domain.repositories.ICollectionRepository;
 import com.academicrepo.back.academic_repo.general.utils.exceptions.HttpExceptionUtils;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -21,13 +19,16 @@ public class UpdateCollectionCommandHandler {
         try {
             DCollection existing = repository.findById(command.id());
             if (existing == null) {
-                throw new IllegalArgumentException("Coleccion no encontrada con ID: " + command.id());
+                throw new IllegalArgumentException(
+                        "Coleccion no encontrada con ID: " + command.id());
             }
 
             if (command.dto().getName() != null) {
-                if (!existing.getName().equals(command.dto().getName()) &&
-                    repository.existsByNameAndSubcommunityId(command.dto().getName(), existing.getSubcommunityId())) {
-                    throw new IllegalArgumentException("Ya existe una coleccion con ese nombre en esta subcomunidad");
+                if (!existing.getName().equals(command.dto().getName())
+                        && repository.existsByNameAndSubcommunityId(
+                                command.dto().getName(), existing.getSubcommunityId())) {
+                    throw new IllegalArgumentException(
+                            "Ya existe una coleccion con ese nombre en esta subcomunidad");
                 }
                 existing.setName(command.dto().getName());
             }

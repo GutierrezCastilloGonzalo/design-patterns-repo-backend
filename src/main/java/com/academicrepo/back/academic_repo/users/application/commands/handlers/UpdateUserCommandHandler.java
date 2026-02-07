@@ -1,16 +1,13 @@
 package com.academicrepo.back.academic_repo.users.application.commands.handlers;
 
-import java.util.Optional;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import com.academicrepo.back.academic_repo.general.utils.exceptions.HttpExceptionUtils;
 import com.academicrepo.back.academic_repo.users.application.commands.UpdateUserCommand;
 import com.academicrepo.back.academic_repo.users.domain.entities.DUser;
 import com.academicrepo.back.academic_repo.users.domain.repositories.IUserRepository;
-
 import jakarta.transaction.Transactional;
+import java.util.Optional;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UpdateUserCommandHandler {
@@ -27,7 +24,8 @@ public class UpdateUserCommandHandler {
         try {
             DUser existingUser = userRepository.findById(command.userId());
             if (existingUser == null) {
-                throw new IllegalArgumentException("Usuario no encontrado con ID: " + command.userId());
+                throw new IllegalArgumentException(
+                        "Usuario no encontrado con ID: " + command.userId());
             }
 
             if (command.userDto().getUserName() != null) {
@@ -35,9 +33,10 @@ public class UpdateUserCommandHandler {
             }
 
             if (command.userDto().getEmail() != null) {
-                if (!existingUser.getEmail().equals(command.userDto().getEmail()) &&
-                    userRepository.existsByEmail(command.userDto().getEmail())) {
-                    throw new IllegalArgumentException("Ya existe un usuario con el email: " + command.userDto().getEmail());
+                if (!existingUser.getEmail().equals(command.userDto().getEmail())
+                        && userRepository.existsByEmail(command.userDto().getEmail())) {
+                    throw new IllegalArgumentException(
+                            "Ya existe un usuario con el email: " + command.userDto().getEmail());
                 }
                 existingUser.setEmail(command.userDto().getEmail());
                 existingUser.validateEmail();

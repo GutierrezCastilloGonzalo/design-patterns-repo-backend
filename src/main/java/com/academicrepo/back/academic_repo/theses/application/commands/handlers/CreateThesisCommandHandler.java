@@ -1,16 +1,13 @@
 package com.academicrepo.back.academic_repo.theses.application.commands.handlers;
 
-import java.util.ArrayList;
-
-import org.springframework.stereotype.Service;
-
 import com.academicrepo.back.academic_repo.general.utils.exceptions.HttpExceptionUtils;
 import com.academicrepo.back.academic_repo.theses.application.commands.CreateThesisCommand;
 import com.academicrepo.back.academic_repo.theses.domain.entities.DThesis;
 import com.academicrepo.back.academic_repo.theses.domain.repositories.IThesisRepository;
-
 import jakarta.transaction.Transactional;
+import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -33,8 +30,14 @@ public class CreateThesisCommandHandler {
             thesis.setLicense(command.dto().getLicense());
             thesis.setCollectionId(command.dto().getCollectionId());
             thesis.setAdvisorId(command.dto().getAdvisorId());
-            thesis.setAuthorIds(command.dto().getAuthorIds() != null ? command.dto().getAuthorIds() : new ArrayList<>());
-            thesis.setKeywordIds(command.dto().getKeywordIds() != null ? command.dto().getKeywordIds() : new ArrayList<>());
+            thesis.setAuthorIds(
+                    command.dto().getAuthorIds() != null
+                            ? command.dto().getAuthorIds()
+                            : new ArrayList<>());
+            thesis.setKeywordIds(
+                    command.dto().getKeywordIds() != null
+                            ? command.dto().getKeywordIds()
+                            : new ArrayList<>());
 
             thesis.validate();
 

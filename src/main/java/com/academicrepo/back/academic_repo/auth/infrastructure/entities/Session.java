@@ -1,10 +1,7 @@
 package com.academicrepo.back.academic_repo.auth.infrastructure.entities;
 
-import java.time.LocalDateTime;
-
 import com.academicrepo.back.academic_repo.general.entities.repositoryEntities.BaseAbstractEntity;
 import com.academicrepo.back.academic_repo.users.infrastructure.entities.User;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,6 +9,7 @@ import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,12 +17,14 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Table(name = "sessions", indexes = {
-    @Index(name = "idx_sessions_token", columnList = "token"),
-    @Index(name = "idx_sessions_refresh_token", columnList = "refresh_token"),
-    @Index(name = "idx_sessions_user_id", columnList = "user_id"),
-    @Index(name = "idx_sessions_expires_at", columnList = "expires_at")
-})
+@Table(
+        name = "sessions",
+        indexes = {
+            @Index(name = "idx_sessions_token", columnList = "token"),
+            @Index(name = "idx_sessions_refresh_token", columnList = "refresh_token"),
+            @Index(name = "idx_sessions_user_id", columnList = "user_id"),
+            @Index(name = "idx_sessions_expires_at", columnList = "expires_at")
+        })
 @Getter
 @Setter
 @AllArgsConstructor

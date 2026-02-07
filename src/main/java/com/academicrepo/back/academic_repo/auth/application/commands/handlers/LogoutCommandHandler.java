@@ -1,14 +1,12 @@
 package com.academicrepo.back.academic_repo.auth.application.commands.handlers;
 
-import org.springframework.stereotype.Service;
-
 import com.academicrepo.back.academic_repo.auth.application.commands.LogoutCommand;
 import com.academicrepo.back.academic_repo.auth.domain.entities.DSession;
 import com.academicrepo.back.academic_repo.auth.domain.repositories.ISessionRepository;
 import com.academicrepo.back.academic_repo.general.utils.exceptions.HttpExceptionUtils;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

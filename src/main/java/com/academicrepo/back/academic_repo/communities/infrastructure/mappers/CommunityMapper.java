@@ -1,9 +1,8 @@
 package com.academicrepo.back.academic_repo.communities.infrastructure.mappers;
 
-import org.springframework.stereotype.Component;
-
 import com.academicrepo.back.academic_repo.communities.domain.entities.DCommunity;
 import com.academicrepo.back.academic_repo.communities.infrastructure.entities.Community;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CommunityMapper {

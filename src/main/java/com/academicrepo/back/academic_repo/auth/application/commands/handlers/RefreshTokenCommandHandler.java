@@ -1,10 +1,5 @@
 package com.academicrepo.back.academic_repo.auth.application.commands.handlers;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
 import com.academicrepo.back.academic_repo.auth.application.commands.RefreshTokenCommand;
 import com.academicrepo.back.academic_repo.auth.application.services.CustomUserDetailsService;
 import com.academicrepo.back.academic_repo.auth.application.services.JwtService;
@@ -15,9 +10,11 @@ import com.academicrepo.back.academic_repo.auth.presentation.dto.AuthResponseDto
 import com.academicrepo.back.academic_repo.general.utils.exceptions.HttpExceptionUtils;
 import com.academicrepo.back.academic_repo.users.domain.entities.DUser;
 import com.academicrepo.back.academic_repo.users.domain.repositories.IUserRepository;
-
 import jakarta.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +30,8 @@ public class RefreshTokenCommandHandler {
         try {
             String refreshToken = command.refreshTokenDto().getRefreshToken();
 
-            if (!jwtService.validateToken(refreshToken) || !jwtService.isRefreshToken(refreshToken)) {
+            if (!jwtService.validateToken(refreshToken)
+                    || !jwtService.isRefreshToken(refreshToken)) {
                 throw new IllegalArgumentException("Refresh token inválido");
             }
 
@@ -54,7 +52,8 @@ public class RefreshTokenCommandHandler {
                 throw new IllegalArgumentException("Usuario no encontrado");
             }
 
-            DAuthenticatedUser authUser = (DAuthenticatedUser) userDetailsService.loadUserByUsername(email);
+            DAuthenticatedUser authUser =
+                    (DAuthenticatedUser) userDetailsService.loadUserByUsername(email);
 
             String newAccessToken = jwtService.generateAccessToken(authUser, userId);
             String newRefreshToken = jwtService.generateRefreshToken(authUser, userId);
@@ -63,24 +62,27 @@ public class RefreshTokenCommandHandler {
             newSession.setUserId(userId);
             newSession.setToken(newAccessToken);
             newSession.setRefreshToken(newRefreshToken);
-            newSession.setExpiresAt(LocalDateTime.now().plusSeconds(jwtService.getAccessTokenExpiration() / 1000));
-            newSession.setRefreshExpiresAt(LocalDateTime.now().plusSeconds(jwtService.getRefreshTokenExpiration() / 1000));
+            newSession.setExpiresAt(
+                    LocalDateTime.now().plusSeconds(jwtService.getAccessTokenExpiration() / 1000));
+            newSession.setRefreshExpiresAt(
+                    LocalDateTime.now().plusSeconds(jwtService.getRefreshTokenExpiration() / 1000));
             newSession.setUserAgent(Optional.ofNullable(command.userAgent()));
             newSession.setIpAddress(Optional.ofNullable(command.ipAddress()));
 
             sessionRepository.save(newSession);
 
             return AuthResponseDto.builder()
-                .accessToken(newAccessToken)
-                .refreshToken(newRefreshToken)
-                .tokenType("Bearer")
-                .expiresIn(jwtService.getAccessTokenExpiration() / 1000)
-                .user(AuthResponseDto.UserInfoDto.builder()
-                    .id(user.getId())
-                    .email(user.getEmail())
-                    .userName(user.getUserName().orElse(null))
-                    .build())
-                .build();
+                    .accessToken(newAccessToken)
+                    .refreshToken(newRefreshToken)
+                    .tokenType("Bearer")
+                    .expiresIn(jwtService.getAccessTokenExpiration() / 1000)
+                    .user(
+                            AuthResponseDto.UserInfoDto.builder()
+                                    .id(user.getId())
+                                    .email(user.getEmail())
+                                    .userName(user.getUserName().orElse(null))
+                                    .build())
+                    .build();
         } catch (Exception e) {
             throw HttpExceptionUtils.processHttpException(e);
         }

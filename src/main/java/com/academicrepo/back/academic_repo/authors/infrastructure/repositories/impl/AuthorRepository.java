@@ -1,16 +1,14 @@
 package com.academicrepo.back.academic_repo.authors.infrastructure.repositories.impl;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
-
 import com.academicrepo.back.academic_repo.authors.domain.entities.DAuthor;
 import com.academicrepo.back.academic_repo.authors.domain.repositories.IAuthorRepository;
 import com.academicrepo.back.academic_repo.authors.infrastructure.entities.Author;
 import com.academicrepo.back.academic_repo.authors.infrastructure.mappers.AuthorMapper;
 import com.academicrepo.back.academic_repo.authors.infrastructure.repositories.interfaces.IAuthorJpaRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
