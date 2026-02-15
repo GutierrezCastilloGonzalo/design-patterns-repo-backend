@@ -1,6 +1,8 @@
 package com.academicrepo.back.academic_repo.users.domain.entities;
 
 import com.academicrepo.back.academic_repo.general.entities.domainEntities.BaseAbstractDomainEntity;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import lombok.AllArgsConstructor;
@@ -20,6 +22,7 @@ public class DUser extends BaseAbstractDomainEntity {
     private Optional<String> userName = Optional.empty();
     private String email;
     private String passwordHash;
+    private List<String> roleNames = new ArrayList<>();
 
     public void validateEmail() {
         if (email == null || email.trim().isEmpty()) {

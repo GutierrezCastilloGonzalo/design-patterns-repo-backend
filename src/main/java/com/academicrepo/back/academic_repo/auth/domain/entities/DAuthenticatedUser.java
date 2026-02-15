@@ -1,6 +1,7 @@
 package com.academicrepo.back.academic_repo.auth.domain.entities;
 
 import com.academicrepo.back.academic_repo.users.domain.entities.DUser;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class DAuthenticatedUser implements UserDetails {
     private String email;
     private String passwordHash;
     private Boolean isActive;
+    private List<String> roles = new ArrayList<>();
 
     public static DAuthenticatedUser fromDUser(DUser user) {
         DAuthenticatedUser authUser = new DAuthenticatedUser();
@@ -26,12 +28,19 @@ public class DAuthenticatedUser implements UserDetails {
         authUser.setEmail(user.getEmail());
         authUser.setPasswordHash(user.getPasswordHash());
         authUser.setIsActive(user.getIsActive());
+        authUser.setRoles(
+                user.getRoleNames() != null && !user.getRoleNames().isEmpty()
+                        ? new ArrayList<>(user.getRoleNames())
+                        : new ArrayList<>());
         return authUser;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if (roles == null || roles.isEmpty()) {
+            return List.of(new SimpleGrantedAuthority("ROLE_USUARIO"));
+        }
+        return roles.stream().map(SimpleGrantedAuthority::new).toList();
     }
 
     @Override

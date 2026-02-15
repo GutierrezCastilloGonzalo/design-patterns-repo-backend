@@ -1,0 +1,76 @@
+databaseChangeLog:
+- changeSet:
+    id: roles-001
+    author: system
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: roles_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+              unique: true
+              uniqueConstraintName: uk_roles_name
+            name: name
+            type: VARCHAR(50)
+        - column:
+            name: description
+            type: VARCHAR(255)
+        - column:
+            name: is_active
+            type: BOOLEAN
+        - column:
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: updated_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        tableName: roles
+- changeSet:
+    id: roles-002
+    author: system
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: user_roles_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: user_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: role_id
+            type: BIGINT
+        tableName: user_roles
+    - addUniqueConstraint:
+        columnNames: user_id, role_id
+        constraintName: uk_user_roles_user_role
+        tableName: user_roles
+    - addForeignKeyConstraint:
+        baseColumnNames: user_id
+        baseTableName: user_roles
+        constraintName: fk_user_roles_user
+        referencedColumnNames: id
+        referencedTableName: users
+    - addForeignKeyConstraint:
+        baseColumnNames: role_id
+        baseTableName: user_roles
+        constraintName: fk_user_roles_role
+        referencedColumnNames: id
+        referencedTableName: roles

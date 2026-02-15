@@ -71,6 +71,7 @@ public class LoginCommandHandler {
                                     .id(user.getId())
                                     .email(user.getEmail())
                                     .userName(user.getUserName().orElse(null))
+                                    .roles(user.getRoleNames())
                                     .build())
                     .build();
         } catch (Exception e) {

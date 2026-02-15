@@ -56,10 +56,9 @@ public class AuthController extends BaseV1Controller {
 
     @PostMapping("/logout")
     @Operation(
-        summary = "Cerrar sesión",
-        description = "Invalida el token de acceso actual",
-        security = @SecurityRequirement(name = "bearerAuth")
-    )
+            summary = "Cerrar sesión",
+            description = "Invalida el token de acceso actual",
+            security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<Void> logout(@RequestHeader("Authorization") String authHeader) {
         String token = authHeader.substring(7).trim();
         logoutCommandHandler.execute(new LogoutCommand(token));
@@ -83,10 +82,9 @@ public class AuthController extends BaseV1Controller {
 
     @GetMapping("/me")
     @Operation(
-        summary = "Obtener usuario actual",
-        description = "Retorna información del usuario autenticado",
-        security = @SecurityRequirement(name = "bearerAuth")
-    )
+            summary = "Obtener usuario actual",
+            description = "Retorna información del usuario autenticado",
+            security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<AuthResponseDto.UserInfoDto> getCurrentUser(
             @AuthenticationPrincipal DAuthenticatedUser authUser) {
         GetCurrentUserQuery query = new GetCurrentUserQuery(authUser.getId());

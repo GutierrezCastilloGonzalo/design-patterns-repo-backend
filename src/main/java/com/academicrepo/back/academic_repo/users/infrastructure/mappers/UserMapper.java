@@ -2,11 +2,18 @@ package com.academicrepo.back.academic_repo.users.infrastructure.mappers;
 
 import com.academicrepo.back.academic_repo.users.domain.entities.DUser;
 import com.academicrepo.back.academic_repo.users.infrastructure.entities.User;
+import com.academicrepo.back.academic_repo.users.infrastructure.entities.UserRole;
+import com.academicrepo.back.academic_repo.users.infrastructure.repositories.interfaces.IUserRoleJpaRepository;
+import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class UserMapper implements IUserMapper {
+
+    private final IUserRoleJpaRepository userRoleJpaRepository;
 
     @Override
     public User toPersistence(DUser domainUser) {
@@ -50,6 +57,16 @@ public class UserMapper implements IUserMapper {
         domainUser.setIsActive(persistenceUser.getIsActive());
         domainUser.setCreatedDate(persistenceUser.getCreatedDate());
         domainUser.setUpdatedDate(persistenceUser.getUpdatedDate());
+
+        if (persistenceUser.getId() != null) {
+            List<UserRole> userRoles =
+                    userRoleJpaRepository.findByUserIdWithRole(persistenceUser.getId());
+            List<String> roleNames =
+                    userRoles.stream()
+                            .map(ur -> "ROLE_" + ur.getRole().getName().toUpperCase())
+                            .toList();
+            domainUser.setRoleNames(roleNames);
+        }
 
         return domainUser;
     }

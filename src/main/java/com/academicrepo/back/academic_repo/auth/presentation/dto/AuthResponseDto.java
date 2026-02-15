@@ -1,5 +1,6 @@
 package com.academicrepo.back.academic_repo.auth.presentation.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,5 +25,6 @@ public class AuthResponseDto {
         private Long id;
         private String email;
         private String userName;
+        private List<String> roles;
     }
 }
