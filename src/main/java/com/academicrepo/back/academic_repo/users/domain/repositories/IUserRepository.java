@@ -17,6 +17,10 @@ public interface IUserRepository {
 
     Page<DUser> findAll(Pageable pageConfig);
 
+    Page<DUser> findAllIncludingInactive(Pageable pageConfig);
+
+    DUser findByIdIncludingInactive(Long id);
+
     DUser deleteById(Long id);
 
     boolean existsByEmail(String email);

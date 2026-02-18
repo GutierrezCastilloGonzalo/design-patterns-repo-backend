@@ -58,8 +58,19 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
+    public Page<DUser> findAllIncludingInactive(Pageable pageConfig) {
+        Page<User> dbUsers = jpaRepository.findAll(pageConfig);
+        return dbUsers.map(this.mapper::toDomain);
+    }
+
+    @Override
+    public DUser findByIdIncludingInactive(Long id) {
+        return jpaRepository.findById(id).map(this.mapper::toDomain).orElse(null);
+    }
+
+    @Override
     public DUser deleteById(Long id) {
-        DUser user = findById(id);
+        DUser user = findByIdIncludingInactive(id);
         jpaRepository.deleteById(id);
         return user;
     }

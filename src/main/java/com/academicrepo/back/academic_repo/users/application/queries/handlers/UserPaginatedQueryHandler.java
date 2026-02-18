@@ -30,7 +30,7 @@ public class UserPaginatedQueryHandler {
 
             Pageable pageable = PageRequest.of(requestDto.getPage(), requestDto.getSize(), sort);
 
-            return userRepository.findAll(pageable);
+            return userRepository.findAllIncludingInactive(pageable);
         } catch (Exception e) {
             throw HttpExceptionUtils.processHttpException(e);
         }

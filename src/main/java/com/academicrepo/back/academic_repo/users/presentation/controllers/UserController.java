@@ -2,11 +2,15 @@ package com.academicrepo.back.academic_repo.users.presentation.controllers;
 
 import com.academicrepo.back.academic_repo.general.presentation.controllers.BaseV1Controller;
 import com.academicrepo.back.academic_repo.general.presentation.exception.ErrorBody;
+import com.academicrepo.back.academic_repo.users.application.commands.ActivateUserCommand;
 import com.academicrepo.back.academic_repo.users.application.commands.CreateUserCommand;
 import com.academicrepo.back.academic_repo.users.application.commands.DeactivateUserCommand;
+import com.academicrepo.back.academic_repo.users.application.commands.HardDeleteUserCommand;
 import com.academicrepo.back.academic_repo.users.application.commands.UpdateUserCommand;
+import com.academicrepo.back.academic_repo.users.application.commands.handlers.ActivateUserCommandHandler;
 import com.academicrepo.back.academic_repo.users.application.commands.handlers.CreateUserCommandHandler;
 import com.academicrepo.back.academic_repo.users.application.commands.handlers.DeactivateUserCommandHandler;
+import com.academicrepo.back.academic_repo.users.application.commands.handlers.HardDeleteUserCommandHandler;
 import com.academicrepo.back.academic_repo.users.application.commands.handlers.UpdateUserCommandHandler;
 import com.academicrepo.back.academic_repo.users.application.queries.GetUserByIdQuery;
 import com.academicrepo.back.academic_repo.users.application.queries.UserPaginatedQuery;
@@ -41,6 +45,8 @@ public class UserController extends BaseV1Controller {
     private final CreateUserCommandHandler createUserCommandHandler;
     private final UpdateUserCommandHandler updateUserCommandHandler;
     private final DeactivateUserCommandHandler deactivateUserCommandHandler;
+    private final ActivateUserCommandHandler activateUserCommandHandler;
+    private final HardDeleteUserCommandHandler hardDeleteUserCommandHandler;
     private final GetUserByIdQueryHandler getUserByIdQueryHandler;
     private final UserPaginatedQueryHandler userPaginatedQueryHandler;
 
@@ -48,11 +54,15 @@ public class UserController extends BaseV1Controller {
             CreateUserCommandHandler createUserCommandHandler,
             UpdateUserCommandHandler updateUserCommandHandler,
             DeactivateUserCommandHandler deactivateUserCommandHandler,
+            ActivateUserCommandHandler activateUserCommandHandler,
+            HardDeleteUserCommandHandler hardDeleteUserCommandHandler,
             GetUserByIdQueryHandler getUserByIdQueryHandler,
             UserPaginatedQueryHandler userPaginatedQueryHandler) {
         this.createUserCommandHandler = createUserCommandHandler;
         this.updateUserCommandHandler = updateUserCommandHandler;
         this.deactivateUserCommandHandler = deactivateUserCommandHandler;
+        this.activateUserCommandHandler = activateUserCommandHandler;
+        this.hardDeleteUserCommandHandler = hardDeleteUserCommandHandler;
         this.getUserByIdQueryHandler = getUserByIdQueryHandler;
         this.userPaginatedQueryHandler = userPaginatedQueryHandler;
     }
@@ -175,5 +185,50 @@ public class UserController extends BaseV1Controller {
             })
     public DUser deactivateUser(@PathVariable Long id) {
         return deactivateUserCommandHandler.execute(new DeactivateUserCommand(id));
+    }
+
+    @PutMapping("/{id}/activate")
+    @Operation(
+            summary = "Activar usuario",
+            description = "Reactiva un usuario previamente desactivado.",
+            responses = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Usuario activado exitosamente",
+                        content =
+                                @Content(
+                                        mediaType = "application/json",
+                                        schema = @Schema(implementation = DUser.class))),
+                @ApiResponse(
+                        responseCode = "404",
+                        description = "Usuario no encontrado",
+                        content =
+                                @Content(
+                                        mediaType = "application/json",
+                                        schema = @Schema(implementation = ErrorBody.class)))
+            })
+    public DUser activateUser(@PathVariable Long id) {
+        return activateUserCommandHandler.execute(new ActivateUserCommand(id));
+    }
+
+    @DeleteMapping("/{id}/permanent")
+    @Operation(
+            summary = "Eliminar usuario permanentemente",
+            description =
+                    "Elimina físicamente un usuario de la base de datos. Esta acción no se puede deshacer.",
+            responses = {
+                @ApiResponse(
+                        responseCode = "204",
+                        description = "Usuario eliminado permanentemente"),
+                @ApiResponse(
+                        responseCode = "404",
+                        description = "Usuario no encontrado",
+                        content =
+                                @Content(
+                                        mediaType = "application/json",
+                                        schema = @Schema(implementation = ErrorBody.class)))
+            })
+    public void hardDeleteUser(@PathVariable Long id) {
+        hardDeleteUserCommandHandler.execute(new HardDeleteUserCommand(id));
     }
 }
