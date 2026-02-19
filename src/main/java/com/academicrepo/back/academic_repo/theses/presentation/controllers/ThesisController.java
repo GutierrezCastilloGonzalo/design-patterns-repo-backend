@@ -63,7 +63,7 @@ public class ThesisController extends BaseV1Controller {
     @GetMapping
     @Operation(summary = "Listar tesis paginadas")
     public Page<DThesis> getAll(
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "desc") String sortDir) {
@@ -71,25 +71,26 @@ public class ThesisController extends BaseV1Controller {
                 sortDir.equalsIgnoreCase("desc")
                         ? Sort.by(sortBy).descending()
                         : Sort.by(sortBy).ascending();
-        return repository.findAll(PageRequest.of(page, size, sort));
+        return repository.findAll(PageRequest.of(Math.max(0, page - 1), size, sort));
     }
 
     @GetMapping("/collection/{collectionId}")
     @Operation(summary = "Listar tesis por colección")
     public Page<DThesis> getByCollection(
             @PathVariable Long collectionId,
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
-        return repository.findByCollectionId(collectionId, PageRequest.of(page, size));
+        return repository.findByCollectionId(
+                collectionId, PageRequest.of(Math.max(0, page - 1), size));
     }
 
     @GetMapping("/advisor/{advisorId}")
     @Operation(summary = "Listar tesis por asesor")
     public Page<DThesis> getByAdvisor(
             @PathVariable Long advisorId,
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
-        return repository.findByAdvisorId(advisorId, PageRequest.of(page, size));
+        return repository.findByAdvisorId(advisorId, PageRequest.of(Math.max(0, page - 1), size));
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

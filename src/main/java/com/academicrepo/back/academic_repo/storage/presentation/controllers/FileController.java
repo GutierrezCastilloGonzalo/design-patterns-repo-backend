@@ -13,6 +13,8 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.ResponseInputStream;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 @RestController
 @RequestMapping("/files")
@@ -102,6 +106,51 @@ public class FileController extends BaseV1Controller {
 
         storageService.deleteFile(fileUrl);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/download")
+    @Operation(
+            summary = "Descargar archivo",
+            description =
+                    "Descarga un archivo de Cloudflare R2 usando su URL publica como proxy autenticado")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Archivo descargado exitosamente"),
+        @ApiResponse(responseCode = "400", description = "URL invalida"),
+        @ApiResponse(responseCode = "401", description = "No autorizado"),
+        @ApiResponse(responseCode = "500", description = "Error al descargar el archivo")
+    })
+    public ResponseEntity<InputStreamResource> downloadFile(
+            @Parameter(description = "URL publica del archivo a descargar", required = true)
+                    @RequestParam("fileUrl")
+                    String fileUrl) {
+
+        ResponseInputStream<GetObjectResponse> r2Response = storageService.downloadFile(fileUrl);
+        GetObjectResponse metadata = r2Response.response();
+
+        String contentType =
+                metadata.contentType() != null
+                        ? metadata.contentType()
+                        : "application/octet-stream";
+
+        String filename = extractFilenameFromUrl(fileUrl);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + filename + "\"")
+                .body(new InputStreamResource(r2Response));
+    }
+
+    private String extractFilenameFromUrl(String fileUrl) {
+        if (fileUrl == null || fileUrl.isBlank()) {
+            return "archivo";
+        }
+        int lastSlash = fileUrl.lastIndexOf('/');
+        if (lastSlash >= 0 && lastSlash < fileUrl.length() - 1) {
+            return fileUrl.substring(lastSlash + 1);
+        }
+        return "archivo";
     }
 
     private String sanitizeFolder(String folder) {

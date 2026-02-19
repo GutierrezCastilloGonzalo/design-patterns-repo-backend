@@ -59,7 +59,7 @@ public class SubcommunityController extends BaseV1Controller {
     @GetMapping
     @Operation(summary = "Listar subcomunidades paginadas")
     public Page<DSubcommunity> getAll(
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
@@ -67,16 +67,17 @@ public class SubcommunityController extends BaseV1Controller {
                 sortDir.equalsIgnoreCase("desc")
                         ? Sort.by(sortBy).descending()
                         : Sort.by(sortBy).ascending();
-        return repository.findAll(PageRequest.of(page, size, sort));
+        return repository.findAll(PageRequest.of(Math.max(0, page - 1), size, sort));
     }
 
     @GetMapping("/community/{communityId}")
     @Operation(summary = "Listar subcomunidades por comunidad")
     public Page<DSubcommunity> getByCommunity(
             @PathVariable Long communityId,
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
-        return repository.findByCommunityId(communityId, PageRequest.of(page, size));
+        return repository.findByCommunityId(
+                communityId, PageRequest.of(Math.max(0, page - 1), size));
     }
 
     @PutMapping("/{id}")

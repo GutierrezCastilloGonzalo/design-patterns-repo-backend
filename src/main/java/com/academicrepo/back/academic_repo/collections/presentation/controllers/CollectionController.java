@@ -59,7 +59,7 @@ public class CollectionController extends BaseV1Controller {
     @GetMapping
     @Operation(summary = "Listar colecciones paginadas")
     public Page<DCollection> getAll(
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
@@ -67,16 +67,17 @@ public class CollectionController extends BaseV1Controller {
                 sortDir.equalsIgnoreCase("desc")
                         ? Sort.by(sortBy).descending()
                         : Sort.by(sortBy).ascending();
-        return repository.findAll(PageRequest.of(page, size, sort));
+        return repository.findAll(PageRequest.of(Math.max(0, page - 1), size, sort));
     }
 
     @GetMapping("/subcommunity/{subcommunityId}")
     @Operation(summary = "Listar colecciones por subcomunidad")
     public Page<DCollection> getBySubcommunity(
             @PathVariable Long subcommunityId,
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
-        return repository.findBySubcommunityId(subcommunityId, PageRequest.of(page, size));
+        return repository.findBySubcommunityId(
+                subcommunityId, PageRequest.of(Math.max(0, page - 1), size));
     }
 
     @PutMapping("/{id}")

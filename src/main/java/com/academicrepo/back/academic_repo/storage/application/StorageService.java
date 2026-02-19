@@ -9,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Slf4j
@@ -90,6 +93,31 @@ public class StorageService {
             log.error("Failed to upload file: {}", originalFilename, e);
             throw new RuntimeException("Error al subir el archivo: " + e.getMessage(), e);
         }
+    }
+
+    /**
+     * Downloads a file from Cloudflare R2 by its public URL.
+     *
+     * @param fileUrl The public URL of the file to download
+     * @return ResponseInputStream containing the file data and metadata
+     */
+    public ResponseInputStream<GetObjectResponse> downloadFile(String fileUrl) {
+        if (s3Client == null || !r2Properties.isConfigured()) {
+            throw new IllegalStateException(
+                    "El servicio de almacenamiento no esta configurado. "
+                            + "Configure las variables de entorno CLOUDFLARE_R2_*");
+        }
+
+        String key = extractKeyFromUrl(fileUrl);
+
+        if (key == null || key.isBlank()) {
+            throw new IllegalArgumentException("URL de archivo invalida: " + fileUrl);
+        }
+
+        GetObjectRequest getRequest =
+                GetObjectRequest.builder().bucket(r2Properties.getBucketName()).key(key).build();
+
+        return s3Client.getObject(getRequest);
     }
 
     /**
