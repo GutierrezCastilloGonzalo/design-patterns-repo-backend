@@ -1,0 +1,46 @@
+databaseChangeLog:
+- changeSet:
+    id: policies-001
+    author: claude
+    changes:
+    - createTable:
+        tableName: acceptance_policies
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: acceptance_policies_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: is_active
+            type: BOOLEAN
+            defaultValueBoolean: true
+        - column:
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: updated_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+              unique: true
+            name: code
+            type: VARCHAR(50)
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(100)
+        - column:
+            name: description
+            type: TEXT
+        - column:
+            constraints:
+              nullable: false
+            name: required
+            type: BOOLEAN
+            defaultValueBoolean: false

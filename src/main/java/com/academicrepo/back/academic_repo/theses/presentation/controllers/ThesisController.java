@@ -21,15 +21,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/theses")
@@ -44,10 +46,12 @@ public class ThesisController extends BaseV1Controller {
     private final GetThesisByIdQueryHandler getByIdHandler;
     private final IThesisRepository repository;
 
-    @PostMapping
-    @Operation(summary = "Crear tesis")
-    public DThesis create(@Valid @RequestBody CreateThesisDto dto) {
-        return createHandler.execute(new CreateThesisCommand(dto));
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Crear tesis con archivo opcional")
+    public DThesis create(
+            @Valid @RequestPart("data") CreateThesisDto dto,
+            @RequestPart(value = "file", required = false) MultipartFile file) {
+        return createHandler.execute(new CreateThesisCommand(dto, file));
     }
 
     @GetMapping("/{id}")
@@ -88,10 +92,13 @@ public class ThesisController extends BaseV1Controller {
         return repository.findByAdvisorId(advisorId, PageRequest.of(page, size));
     }
 
-    @PutMapping("/{id}")
-    @Operation(summary = "Actualizar tesis")
-    public DThesis update(@PathVariable Long id, @Valid @RequestBody UpdateThesisDto dto) {
-        return updateHandler.execute(new UpdateThesisCommand(id, dto));
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Actualizar tesis con archivo opcional")
+    public DThesis update(
+            @PathVariable Long id,
+            @Valid @RequestPart("data") UpdateThesisDto dto,
+            @RequestPart(value = "file", required = false) MultipartFile file) {
+        return updateHandler.execute(new UpdateThesisCommand(id, dto, file));
     }
 
     @DeleteMapping("/{id}")

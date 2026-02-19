@@ -1,0 +1,97 @@
+databaseChangeLog:
+- changeSet:
+    id: licenses-001
+    author: claude
+    changes:
+    - createTable:
+        tableName: licenses
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: licenses_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: is_active
+            type: BOOLEAN
+            defaultValueBoolean: true
+        - column:
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: updated_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(200)
+        - column:
+            name: description
+            type: TEXT
+        - column:
+            constraints:
+              nullable: false
+            name: type
+            type: VARCHAR(50)
+        - column:
+            constraints:
+              nullable: false
+            name: status
+            type: VARCHAR(20)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: file_url
+            type: VARCHAR(500)
+        - column:
+            name: valid_from
+            type: date
+        - column:
+            name: valid_until
+            type: date
+
+- changeSet:
+    id: licenses-002
+    author: claude
+    changes:
+    - createTable:
+        tableName: license_policy_acceptances
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: license_policy_acceptances_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: license_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: policy_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: accepted
+            type: BOOLEAN
+            defaultValueBoolean: false
+        - column:
+            name: accepted_at
+            type: TIMESTAMP WITHOUT TIME ZONE
+    - addForeignKeyConstraint:
+        baseTableName: license_policy_acceptances
+        baseColumnNames: license_id
+        constraintName: fk_license_policy_acceptances_license
+        referencedTableName: licenses
+        referencedColumnNames: id

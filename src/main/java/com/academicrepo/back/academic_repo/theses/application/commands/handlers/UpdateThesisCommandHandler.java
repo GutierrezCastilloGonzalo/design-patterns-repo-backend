@@ -1,18 +1,22 @@
 package com.academicrepo.back.academic_repo.theses.application.commands.handlers;
 
 import com.academicrepo.back.academic_repo.general.utils.exceptions.HttpExceptionUtils;
+import com.academicrepo.back.academic_repo.storage.application.StorageService;
+import com.academicrepo.back.academic_repo.storage.presentation.dto.FileUploadResponse;
 import com.academicrepo.back.academic_repo.theses.application.commands.UpdateThesisCommand;
 import com.academicrepo.back.academic_repo.theses.domain.entities.DThesis;
 import com.academicrepo.back.academic_repo.theses.domain.repositories.IThesisRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
 public class UpdateThesisCommandHandler {
 
     private final IThesisRepository repository;
+    private final StorageService storageService;
 
     @Transactional
     public DThesis execute(UpdateThesisCommand command) {
@@ -20,6 +24,15 @@ public class UpdateThesisCommandHandler {
             DThesis existing = repository.findById(command.id());
             if (existing == null) {
                 throw new IllegalArgumentException("Tesis no encontrada con ID: " + command.id());
+            }
+
+            // Upload file if provided
+            MultipartFile file = command.file();
+            if (file != null && !file.isEmpty() && storageService.isAvailable()) {
+                FileUploadResponse uploadResponse = storageService.uploadFile(file, "theses");
+                existing.setFileUrl(uploadResponse.getFileUrl());
+            } else if (command.dto().getFileUrl() != null) {
+                existing.setFileUrl(command.dto().getFileUrl());
             }
 
             if (command.dto().getTitle() != null) {
@@ -30,9 +43,6 @@ public class UpdateThesisCommandHandler {
             }
             if (command.dto().getPublicationDate() != null) {
                 existing.setPublicationDate(command.dto().getPublicationDate());
-            }
-            if (command.dto().getFileUrl() != null) {
-                existing.setFileUrl(command.dto().getFileUrl());
             }
             if (command.dto().getNumberOfPages() != null) {
                 existing.setNumberOfPages(command.dto().getNumberOfPages());
