@@ -5,6 +5,10 @@ import com.academicrepo.back.academic_repo.authors.domain.repositories.IAuthorRe
 import com.academicrepo.back.academic_repo.authors.infrastructure.entities.Author;
 import com.academicrepo.back.academic_repo.authors.infrastructure.mappers.AuthorMapper;
 import com.academicrepo.back.academic_repo.authors.infrastructure.repositories.interfaces.IAuthorJpaRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +38,16 @@ public class AuthorRepository implements IAuthorRepository {
     @Override
     public DAuthor findById(Long id) {
         return jpaRepository.findByIdAndIsActiveTrue(id).map(mapper::toDomain).orElse(null);
+    }
+
+    @Override
+    public List<DAuthor> findAllByIds(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) return new ArrayList<>();
+        Map<Long, DAuthor> byId =
+                jpaRepository.findByIdInAndIsActiveTrue(ids).stream()
+                        .map(mapper::toDomain)
+                        .collect(Collectors.toMap(DAuthor::getId, a -> a));
+        return ids.stream().filter(byId::containsKey).map(byId::get).collect(Collectors.toList());
     }
 
     @Override

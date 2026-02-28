@@ -5,6 +5,9 @@ import com.academicrepo.back.academic_repo.keywords.domain.repositories.IKeyword
 import com.academicrepo.back.academic_repo.keywords.infrastructure.entities.Keyword;
 import com.academicrepo.back.academic_repo.keywords.infrastructure.mappers.KeywordMapper;
 import com.academicrepo.back.academic_repo.keywords.infrastructure.repositories.interfaces.IKeywordJpaRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +37,14 @@ public class KeywordRepository implements IKeywordRepository {
     @Override
     public DKeyword findById(Long id) {
         return jpaRepository.findByIdAndIsActiveTrue(id).map(mapper::toDomain).orElse(null);
+    }
+
+    @Override
+    public List<DKeyword> findAllByIds(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) return new ArrayList<>();
+        return jpaRepository.findByIdInAndIsActiveTrue(ids).stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toList());
     }
 
     @Override
