@@ -1,0 +1,43 @@
+---
+- name: Pull image and setup service environment
+  hosts: all
+  become: true
+
+  vars:
+    compose_dir: /opt/docker/compose/projects/academic-production
+
+  vars_files:
+    - ../+production/vault.yml
+
+  tasks:
+    - name: Pull Docker image
+      community.docker.docker_image:
+        name: "{{ registry_image }}"
+        source: pull
+        force_source: true
+
+    - name: Write version file
+      ansible.builtin.copy:
+        content: "{{ version }}"
+        dest: "{{ compose_dir }}/.version.{{ project_service }}"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: "0644"
+
+    - name: Write backend environment file
+      ansible.builtin.copy:
+        content: |
+          DATABASE_URL={{ vault_database_url }}
+          DATABASE_USERNAME={{ vault_database_username }}
+          DATABASE_PASSWORD={{ vault_database_password }}
+          JWT_SECRET_KEY={{ vault_jwt_secret_key }}
+          CLOUDFLARE_R2_ACCOUNT_ID={{ vault_cloudflare_r2_account_id }}
+          CLOUDFLARE_R2_ACCESS_KEY_ID={{ vault_cloudflare_r2_access_key_id }}
+          CLOUDFLARE_R2_SECRET_ACCESS_KEY={{ vault_cloudflare_r2_secret_access_key }}
+          CLOUDFLARE_R2_BUCKET_NAME={{ vault_cloudflare_r2_bucket_name }}
+          CLOUDFLARE_R2_PUBLIC_URL={{ vault_cloudflare_r2_public_url }}
+        dest: "{{ compose_dir }}/.env.{{ project_service }}"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: "0600"
+      when: project_service == "backend"

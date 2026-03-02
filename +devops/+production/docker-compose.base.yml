@@ -1,0 +1,25 @@
+services:
+  academic-production-postgres:
+    image: postgres:16-alpine
+    container_name: academic-production-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: academic_repo
+      POSTGRES_USER: academicuser
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U academicuser -d academic_repo"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - academic-production-network
+
+volumes:
+  postgres-data:
+
+networks:
+  academic-production-network:
+    driver: bridge

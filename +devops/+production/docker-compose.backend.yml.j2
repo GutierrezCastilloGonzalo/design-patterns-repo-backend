@@ -1,0 +1,20 @@
+services:
+  academic-production-backend:
+    image: ${ACADEMIC_BACKEND_REGISTRY_URL}:${ACADEMIC_BACKEND_VERSION}
+    container_name: academic-production-backend
+    restart: unless-stopped
+    depends_on:
+      academic-production-postgres:
+        condition: service_healthy
+    env_file:
+      - .env.backend
+    ports:
+      - "3081:80"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80/academic/api/api-docs"]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3
+    networks:
+      - academic-production-network
