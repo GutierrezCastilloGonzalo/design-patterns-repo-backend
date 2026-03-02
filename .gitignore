@@ -33,8 +33,5 @@ build/
 .vscode/
 
 .env
-<<<<<<< HEAD
 vault-password.txt
-=======
 /docker
->>>>>>> a87b437a48ecfd0f9bcc22902260466ca7e8f860
