@@ -83,7 +83,11 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:4200"));
+        config.setAllowedOrigins(
+                Arrays.asList(
+                        "http://localhost:3000",
+                        "http://localhost:4200",
+                        "https://academic-app.gonzalogtz.com"));
         config.setAllowedHeaders(
                 Arrays.asList(
                         "Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
