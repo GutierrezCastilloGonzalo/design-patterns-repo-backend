@@ -21,4 +21,6 @@ public interface IAuthorJpaRepository extends JpaRepository<Author, Long> {
     boolean existsByEmail(String email);
 
     boolean existsByOrcid(String orcid);
+
+    long countByIsActiveTrue();
 }

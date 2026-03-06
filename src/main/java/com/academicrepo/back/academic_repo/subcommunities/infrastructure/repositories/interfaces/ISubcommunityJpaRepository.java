@@ -16,4 +16,6 @@ public interface ISubcommunityJpaRepository extends JpaRepository<Subcommunity, 
     Page<Subcommunity> findByCommunityIdAndIsActiveTrue(Long communityId, Pageable pageable);
 
     boolean existsByNameAndCommunityId(String name, Long communityId);
+
+    long countByIsActiveTrue();
 }

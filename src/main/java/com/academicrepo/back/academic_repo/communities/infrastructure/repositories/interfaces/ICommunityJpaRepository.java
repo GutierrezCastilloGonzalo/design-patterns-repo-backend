@@ -14,4 +14,6 @@ public interface ICommunityJpaRepository extends JpaRepository<Community, Long> 
     Page<Community> findByIsActiveTrue(Pageable pageable);
 
     boolean existsByName(String name);
+
+    long countByIsActiveTrue();
 }

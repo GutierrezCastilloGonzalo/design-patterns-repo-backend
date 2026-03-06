@@ -18,4 +18,6 @@ public interface IUserJpaRepository extends JpaRepository<User, Long> {
     Page<User> findByIsActiveTrue(Pageable pageable);
 
     boolean existsByEmail(String email);
+
+    long countByIsActiveTrue();
 }
