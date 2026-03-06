@@ -36,4 +36,26 @@ public interface IThesisJpaRepository extends JpaRepository<Thesis, Long> {
     @Transactional
     @Query("UPDATE Thesis t SET t.nVistas = t.nVistas + 1 WHERE t.id = :id")
     void incrementViewCount(@Param("id") Long id);
+
+    @Query(
+            value =
+                    "SELECT DISTINCT t FROM Thesis t LEFT JOIN t.thesisAuthors ta"
+                            + " WHERE t.isActive = true"
+                            + " AND (:year IS NULL OR YEAR(t.publicationDate) = :year)"
+                            + " AND (cast(:title as String) IS NULL OR LOWER(t.title) LIKE LOWER(CONCAT('%', cast(:title as String), '%')))"
+                            + " AND (:authorId IS NULL OR ta.authorId = :authorId)"
+                            + " AND (:collectionId IS NULL OR t.collectionId = :collectionId)",
+            countQuery =
+                    "SELECT COUNT(DISTINCT t) FROM Thesis t LEFT JOIN t.thesisAuthors ta"
+                            + " WHERE t.isActive = true"
+                            + " AND (:year IS NULL OR YEAR(t.publicationDate) = :year)"
+                            + " AND (cast(:title as String) IS NULL OR LOWER(t.title) LIKE LOWER(CONCAT('%', cast(:title as String), '%')))"
+                            + " AND (:authorId IS NULL OR ta.authorId = :authorId)"
+                            + " AND (:collectionId IS NULL OR t.collectionId = :collectionId)")
+    Page<Thesis> search(
+            @Param("year") Integer year,
+            @Param("title") String title,
+            @Param("authorId") Long authorId,
+            @Param("collectionId") Long collectionId,
+            Pageable pageable);
 }

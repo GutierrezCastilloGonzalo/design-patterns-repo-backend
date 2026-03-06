@@ -8,9 +8,11 @@ import com.academicrepo.back.academic_repo.theses.application.commands.handlers.
 import com.academicrepo.back.academic_repo.theses.application.queries.GetThesesPublicQuery;
 import com.academicrepo.back.academic_repo.theses.application.queries.GetThesisPublicDetailQuery;
 import com.academicrepo.back.academic_repo.theses.application.queries.GetTopDownloadedThesesQuery;
+import com.academicrepo.back.academic_repo.theses.application.queries.SearchThesesQuery;
 import com.academicrepo.back.academic_repo.theses.application.queries.handlers.GetThesesPublicQueryHandler;
 import com.academicrepo.back.academic_repo.theses.application.queries.handlers.GetThesisPublicDetailQueryHandler;
 import com.academicrepo.back.academic_repo.theses.application.queries.handlers.GetTopDownloadedThesesQueryHandler;
+import com.academicrepo.back.academic_repo.theses.application.queries.handlers.SearchThesesQueryHandler;
 import com.academicrepo.back.academic_repo.theses.presentation.dto.ThesisPublicDto;
 import com.academicrepo.back.academic_repo.theses.presentation.dto.ThesisTopDownloadedDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,6 +40,7 @@ public class PublicController extends BaseV1Controller {
     private final GetTopDownloadedThesesQueryHandler topDownloadedHandler;
     private final IncrementDownloadCountCommandHandler incrementDownloadHandler;
     private final IncrementViewCountCommandHandler incrementViewHandler;
+    private final SearchThesesQueryHandler searchHandler;
 
     @GetMapping
     @Operation(summary = "Listar tesis con keywords (sin autenticación)")
@@ -55,6 +58,21 @@ public class PublicController extends BaseV1Controller {
         ThesisPublicDto dto = detailHandler.execute(new GetThesisPublicDetailQuery(id));
         incrementViewHandler.execute(new IncrementViewCountCommand(id));
         return dto;
+    }
+
+    @GetMapping("/search")
+    @Operation(summary = "Buscar tesis por año, título, autor o colección (sin autenticación)")
+    public Page<ThesisPublicDto> search(
+            @RequestParam(required = false) Integer year,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) Long authorId,
+            @RequestParam(required = false) Long collectionId,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "desc") String sortDir) {
+        return searchHandler.execute(
+                new SearchThesesQuery(year, title, authorId, collectionId, page, size, sortBy, sortDir));
     }
 
     @GetMapping("/top-downloaded")

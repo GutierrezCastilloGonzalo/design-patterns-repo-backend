@@ -125,4 +125,11 @@ public class ThesisRepository implements IThesisRepository {
                 .map(mapper::toDomain)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Page<DThesis> search(
+            Integer year, String title, Long authorId, Long collectionId, Pageable pageConfig) {
+        return jpaRepository.search(year, title, authorId, collectionId, pageConfig)
+                .map(mapper::toDomain);
+    }
 }

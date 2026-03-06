@@ -25,4 +25,7 @@ public interface IThesisRepository {
     void incrementViewCount(Long id);
 
     List<DThesis> findTopByDownloads(int limit);
+
+    Page<DThesis> search(
+            Integer year, String title, Long authorId, Long collectionId, Pageable pageConfig);
 }
