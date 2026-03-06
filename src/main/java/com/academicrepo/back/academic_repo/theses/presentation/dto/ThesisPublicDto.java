@@ -21,6 +21,7 @@ public class ThesisPublicDto {
     private String abstractText;
     private LocalDate publicationDate;
     private String fileUrl;
+    private String thumbnailUrl;
     private Integer numberOfPages;
     private String language;
     private String documentType;

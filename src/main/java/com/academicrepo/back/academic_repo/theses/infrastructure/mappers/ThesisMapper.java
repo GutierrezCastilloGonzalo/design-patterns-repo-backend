@@ -26,6 +26,7 @@ public class ThesisMapper {
         builder.abstractText(domain.getAbstractText());
         builder.publicationDate(domain.getPublicationDate());
         builder.fileUrl(domain.getFileUrl());
+        builder.thumbnailUrl(domain.getThumbnailUrl());
         builder.numberOfPages(domain.getNumberOfPages());
         builder.language(domain.getLanguage());
         builder.documentType(domain.getDocumentType());
@@ -53,6 +54,7 @@ public class ThesisMapper {
         domain.setAbstractText(entity.getAbstractText());
         domain.setPublicationDate(entity.getPublicationDate());
         domain.setFileUrl(entity.getFileUrl());
+        domain.setThumbnailUrl(entity.getThumbnailUrl());
         domain.setNumberOfPages(entity.getNumberOfPages());
         domain.setLanguage(entity.getLanguage());
         domain.setDocumentType(entity.getDocumentType());

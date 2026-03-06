@@ -44,6 +44,9 @@ public class Thesis extends BaseAbstractEntity {
     @Column(name = "file_url", length = 500)
     private String fileUrl;
 
+    @Column(name = "thumbnail_url", length = 500)
+    private String thumbnailUrl;
+
     @Column(name = "number_of_pages")
     private Integer numberOfPages;
 
