@@ -33,6 +33,8 @@ public class ThesisMapper {
         builder.license(domain.getLicense());
         builder.collectionId(domain.getCollectionId());
         builder.advisorId(domain.getAdvisorId());
+        if (domain.getNDescargas() != null) builder.nDescargas(domain.getNDescargas());
+        if (domain.getNVistas() != null) builder.nVistas(domain.getNVistas());
 
         if (domain.getId() != null) builder.id(domain.getId());
         if (domain.getIsActive() != null) builder.isActive(domain.getIsActive());
@@ -58,6 +60,8 @@ public class ThesisMapper {
         domain.setLicense(entity.getLicense());
         domain.setCollectionId(entity.getCollectionId());
         domain.setAdvisorId(entity.getAdvisorId());
+        domain.setNDescargas(entity.getNDescargas());
+        domain.setNVistas(entity.getNVistas());
         domain.setIsActive(entity.getIsActive());
         domain.setCreatedDate(entity.getCreatedDate());
         domain.setUpdatedDate(entity.getUpdatedDate());

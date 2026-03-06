@@ -1,10 +1,15 @@
 package com.academicrepo.back.academic_repo.theses.infrastructure.repositories.interfaces;
 
 import com.academicrepo.back.academic_repo.theses.infrastructure.entities.Thesis;
+import jakarta.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -18,4 +23,17 @@ public interface IThesisJpaRepository extends JpaRepository<Thesis, Long> {
     Page<Thesis> findByAdvisorIdAndIsActiveTrue(Long advisorId, Pageable pageable);
 
     boolean existsByTitleAndCollectionId(String title, Long collectionId);
+
+    @Query("SELECT t FROM Thesis t WHERE t.isActive = true ORDER BY t.nDescargas DESC")
+    List<Thesis> findTopByDownloads(Pageable pageable);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Thesis t SET t.nDescargas = t.nDescargas + 1 WHERE t.id = :id")
+    void incrementDownloadCount(@Param("id") Long id);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Thesis t SET t.nVistas = t.nVistas + 1 WHERE t.id = :id")
+    void incrementViewCount(@Param("id") Long id);
 }

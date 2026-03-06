@@ -29,4 +29,6 @@ public class ThesisPublicDto {
     private String collection;
     private List<String> authors;
     private List<String> keywords;
+    private Long nDescargas;
+    private Long nVistas;
 }

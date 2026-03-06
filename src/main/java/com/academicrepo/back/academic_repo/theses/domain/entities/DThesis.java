@@ -25,6 +25,8 @@ public class DThesis extends BaseAbstractDomainEntity {
     private String license;
     private Long collectionId;
     private Long advisorId;
+    private Long nDescargas = 0L;
+    private Long nVistas = 0L;
     private List<Long> authorIds = new ArrayList<>();
     private List<Long> keywordIds = new ArrayList<>();
 

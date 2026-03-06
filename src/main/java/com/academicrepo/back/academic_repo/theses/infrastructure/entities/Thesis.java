@@ -66,6 +66,14 @@ public class Thesis extends BaseAbstractEntity {
     private Long advisorId;
 
     @lombok.Builder.Default
+    @Column(name = "n_descargas", nullable = false)
+    private Long nDescargas = 0L;
+
+    @lombok.Builder.Default
+    @Column(name = "n_vistas", nullable = false)
+    private Long nVistas = 0L;
+
+    @lombok.Builder.Default
     @OneToMany(
             mappedBy = "thesis",
             cascade = CascadeType.ALL,

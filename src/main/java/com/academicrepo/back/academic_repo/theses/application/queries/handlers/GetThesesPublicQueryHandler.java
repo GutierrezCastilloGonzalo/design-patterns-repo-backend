@@ -78,6 +78,8 @@ public class GetThesesPublicQueryHandler {
                                         .collection(collectionName)
                                         .authors(authorNames)
                                         .keywords(keywordWords)
+                                        .nDescargas(thesis.getNDescargas())
+                                        .nVistas(thesis.getNVistas())
                                         .build();
                             });
         } catch (Exception e) {
