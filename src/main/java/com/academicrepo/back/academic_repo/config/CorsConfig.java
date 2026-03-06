@@ -18,7 +18,8 @@ public class CorsConfig {
                 Arrays.asList(
                         "http://localhost:3000",
                         "http://localhost:4200",
-                        "https://academic-app.gonzalogtz.com"));
+                        "https://academic-app.gonzalogtz.com",
+                        "https://jesusllicag.github.io"));
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setMaxAge(3600L);
