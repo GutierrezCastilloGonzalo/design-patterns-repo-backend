@@ -87,7 +87,8 @@ public class SecurityConfig {
                 Arrays.asList(
                         "http://localhost:3000",
                         "http://localhost:4200",
-                        "https://academic-app.gonzalogtz.com"));
+                        "https://academic-app.gonzalogtz.com",
+                        "https://jesusllicag.github.io"));
         config.setAllowedHeaders(
                 Arrays.asList(
                         "Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
