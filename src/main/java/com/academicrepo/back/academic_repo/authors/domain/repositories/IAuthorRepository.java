@@ -19,4 +19,6 @@ public interface IAuthorRepository {
     boolean existsByEmail(String email);
 
     boolean existsByOrcid(String orcid);
+
+    List<DAuthor> findAllActive();
 }

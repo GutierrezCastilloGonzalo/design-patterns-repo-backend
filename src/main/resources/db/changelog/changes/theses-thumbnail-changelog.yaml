@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-thumbnail-url-to-theses
+      author: system
+      changes:
+        - addColumn:
+            tableName: theses
+            columns:
+              - column:
+                  name: thumbnail_url
+                  type: VARCHAR(500)
+                  constraints:
+                    nullable: true

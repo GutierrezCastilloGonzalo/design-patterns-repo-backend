@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-counters-to-theses
+      author: system
+      changes:
+        - addColumn:
+            tableName: theses
+            columns:
+              - column:
+                  name: n_descargas
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: n_vistas
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false

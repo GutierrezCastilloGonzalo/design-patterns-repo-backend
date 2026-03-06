@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 public interface IAuthorJpaRepository extends JpaRepository<Author, Long> {
     Optional<Author> findByIdAndIsActiveTrue(Long id);
 
+    List<Author> findByIsActiveTrue();
+
     Page<Author> findByIsActiveTrue(Pageable pageable);
 
     List<Author> findByIdInAndIsActiveTrue(List<Long> ids);
@@ -19,4 +21,6 @@ public interface IAuthorJpaRepository extends JpaRepository<Author, Long> {
     boolean existsByEmail(String email);
 
     boolean existsByOrcid(String orcid);
+
+    long countByIsActiveTrue();
 }

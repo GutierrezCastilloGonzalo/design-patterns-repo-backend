@@ -154,6 +154,48 @@ public class StorageService {
         }
     }
 
+    /**
+     * Uploads raw bytes to Cloudflare R2.
+     *
+     * @param bytes The file content as bytes
+     * @param contentType The MIME type of the content
+     * @param filename The filename to use (including extension)
+     * @param folder The folder/prefix to store the file in
+     * @return FileUploadResponse containing the file URL and metadata
+     */
+    public FileUploadResponse uploadBytes(
+            byte[] bytes, String contentType, String filename, String folder) {
+        if (s3Client == null || !r2Properties.isConfigured()) {
+            throw new IllegalStateException(
+                    "El servicio de almacenamiento no esta configurado. "
+                            + "Configure las variables de entorno CLOUDFLARE_R2_*");
+        }
+
+        String key = folder + "/" + filename;
+
+        PutObjectRequest putRequest =
+                PutObjectRequest.builder()
+                        .bucket(r2Properties.getBucketName())
+                        .key(key)
+                        .contentType(contentType)
+                        .contentLength((long) bytes.length)
+                        .build();
+
+        s3Client.putObject(putRequest, RequestBody.fromBytes(bytes));
+
+        String fileUrl = buildPublicUrl(key);
+
+        log.info("Bytes uploaded successfully: {} -> {}", filename, fileUrl);
+
+        return FileUploadResponse.builder()
+                .fileName(filename)
+                .originalFileName(filename)
+                .fileUrl(fileUrl)
+                .contentType(contentType)
+                .size((long) bytes.length)
+                .build();
+    }
+
     private void validateFile(MultipartFile file) {
         if (file == null || file.isEmpty()) {
             throw new IllegalArgumentException("El archivo no puede estar vacio");

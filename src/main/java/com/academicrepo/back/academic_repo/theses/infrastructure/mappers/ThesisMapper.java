@@ -26,6 +26,7 @@ public class ThesisMapper {
         builder.abstractText(domain.getAbstractText());
         builder.publicationDate(domain.getPublicationDate());
         builder.fileUrl(domain.getFileUrl());
+        builder.thumbnailUrl(domain.getThumbnailUrl());
         builder.numberOfPages(domain.getNumberOfPages());
         builder.language(domain.getLanguage());
         builder.documentType(domain.getDocumentType());
@@ -33,6 +34,8 @@ public class ThesisMapper {
         builder.license(domain.getLicense());
         builder.collectionId(domain.getCollectionId());
         builder.advisorId(domain.getAdvisorId());
+        if (domain.getNDescargas() != null) builder.nDescargas(domain.getNDescargas());
+        if (domain.getNVistas() != null) builder.nVistas(domain.getNVistas());
 
         if (domain.getId() != null) builder.id(domain.getId());
         if (domain.getIsActive() != null) builder.isActive(domain.getIsActive());
@@ -51,6 +54,7 @@ public class ThesisMapper {
         domain.setAbstractText(entity.getAbstractText());
         domain.setPublicationDate(entity.getPublicationDate());
         domain.setFileUrl(entity.getFileUrl());
+        domain.setThumbnailUrl(entity.getThumbnailUrl());
         domain.setNumberOfPages(entity.getNumberOfPages());
         domain.setLanguage(entity.getLanguage());
         domain.setDocumentType(entity.getDocumentType());
@@ -58,6 +62,8 @@ public class ThesisMapper {
         domain.setLicense(entity.getLicense());
         domain.setCollectionId(entity.getCollectionId());
         domain.setAdvisorId(entity.getAdvisorId());
+        domain.setNDescargas(entity.getNDescargas());
+        domain.setNVistas(entity.getNVistas());
         domain.setIsActive(entity.getIsActive());
         domain.setCreatedDate(entity.getCreatedDate());
         domain.setUpdatedDate(entity.getUpdatedDate());

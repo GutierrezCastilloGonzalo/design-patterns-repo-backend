@@ -70,6 +70,7 @@ public class GetThesesPublicQueryHandler {
                                         .abstractText(thesis.getAbstractText())
                                         .publicationDate(thesis.getPublicationDate())
                                         .fileUrl(thesis.getFileUrl())
+                                        .thumbnailUrl(thesis.getThumbnailUrl())
                                         .numberOfPages(thesis.getNumberOfPages())
                                         .language(thesis.getLanguage())
                                         .documentType(thesis.getDocumentType())
@@ -78,6 +79,8 @@ public class GetThesesPublicQueryHandler {
                                         .collection(collectionName)
                                         .authors(authorNames)
                                         .keywords(keywordWords)
+                                        .nDescargas(thesis.getNDescargas())
+                                        .nVistas(thesis.getNVistas())
                                         .build();
                             });
         } catch (Exception e) {

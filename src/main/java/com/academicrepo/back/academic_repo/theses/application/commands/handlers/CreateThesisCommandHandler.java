@@ -1,6 +1,7 @@
 package com.academicrepo.back.academic_repo.theses.application.commands.handlers;
 
 import com.academicrepo.back.academic_repo.general.utils.exceptions.HttpExceptionUtils;
+import com.academicrepo.back.academic_repo.storage.application.PdfThumbnailService;
 import com.academicrepo.back.academic_repo.storage.application.StorageService;
 import com.academicrepo.back.academic_repo.storage.presentation.dto.FileUploadResponse;
 import com.academicrepo.back.academic_repo.theses.application.commands.CreateThesisCommand;
@@ -18,14 +19,17 @@ public class CreateThesisCommandHandler {
 
     private final IThesisRepository repository;
     private final StorageService storageService;
+    private final PdfThumbnailService pdfThumbnailService;
 
     @Transactional
     public DThesis execute(CreateThesisCommand command) {
         try {
             // Upload file if provided
             String fileUrl = command.dto().getFileUrl();
+            String thumbnailUrl = null;
             MultipartFile file = command.file();
             if (file != null && !file.isEmpty() && storageService.isAvailable()) {
+                thumbnailUrl = pdfThumbnailService.generateAndUpload(file);
                 FileUploadResponse uploadResponse = storageService.uploadFile(file, "theses");
                 fileUrl = uploadResponse.getFileUrl();
             }
@@ -35,6 +39,7 @@ public class CreateThesisCommandHandler {
             thesis.setAbstractText(command.dto().getAbstractText());
             thesis.setPublicationDate(command.dto().getPublicationDate());
             thesis.setFileUrl(fileUrl);
+            thesis.setThumbnailUrl(thumbnailUrl);
             thesis.setNumberOfPages(command.dto().getNumberOfPages());
             thesis.setLanguage(command.dto().getLanguage());
             thesis.setDocumentType(command.dto().getDocumentType());

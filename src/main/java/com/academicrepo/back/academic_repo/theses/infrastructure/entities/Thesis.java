@@ -44,6 +44,9 @@ public class Thesis extends BaseAbstractEntity {
     @Column(name = "file_url", length = 500)
     private String fileUrl;
 
+    @Column(name = "thumbnail_url", length = 500)
+    private String thumbnailUrl;
+
     @Column(name = "number_of_pages")
     private Integer numberOfPages;
 
@@ -64,6 +67,14 @@ public class Thesis extends BaseAbstractEntity {
 
     @Column(name = "advisor_id")
     private Long advisorId;
+
+    @lombok.Builder.Default
+    @Column(name = "n_descargas", nullable = false)
+    private Long nDescargas = 0L;
+
+    @lombok.Builder.Default
+    @Column(name = "n_vistas", nullable = false)
+    private Long nVistas = 0L;
 
     @lombok.Builder.Default
     @OneToMany(

@@ -1,6 +1,7 @@
 package com.academicrepo.back.academic_repo.advisors.infrastructure.repositories.interfaces;
 
 import com.academicrepo.back.academic_repo.advisors.infrastructure.entities.Advisor;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,4 +17,8 @@ public interface IAdvisorJpaRepository extends JpaRepository<Advisor, Long> {
     boolean existsByEmail(String email);
 
     boolean existsByOrcid(String orcid);
+
+    long countByIsActiveTrue();
+
+    List<Advisor> findByIdInAndIsActiveTrue(List<Long> ids);
 }

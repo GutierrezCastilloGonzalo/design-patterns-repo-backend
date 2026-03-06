@@ -11,6 +11,8 @@ import com.academicrepo.back.academic_repo.theses.infrastructure.repositories.in
 import com.academicrepo.back.academic_repo.theses.infrastructure.repositories.interfaces.IThesisJpaRepository;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import org.springframework.data.domain.PageRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -103,5 +105,31 @@ public class ThesisRepository implements IThesisRepository {
     @Override
     public boolean existsByTitleAndCollectionId(String title, Long collectionId) {
         return jpaRepository.existsByTitleAndCollectionId(title, collectionId);
+    }
+
+    @Override
+    public void incrementDownloadCount(Long id) {
+        jpaRepository.incrementDownloadCount(id);
+    }
+
+    @Override
+    public void incrementViewCount(Long id) {
+        jpaRepository.incrementViewCount(id);
+    }
+
+    @Override
+    public List<DThesis> findTopByDownloads(int limit) {
+        return jpaRepository
+                .findTopByDownloads(PageRequest.of(0, limit))
+                .stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<DThesis> search(
+            Integer year, String title, Long authorId, Long collectionId, Pageable pageConfig) {
+        return jpaRepository.search(year, title, authorId, collectionId, pageConfig)
+                .map(mapper::toDomain);
     }
 }

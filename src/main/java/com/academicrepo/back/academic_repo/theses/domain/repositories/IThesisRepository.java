@@ -1,6 +1,7 @@
 package com.academicrepo.back.academic_repo.theses.domain.repositories;
 
 import com.academicrepo.back.academic_repo.theses.domain.entities.DThesis;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -18,4 +19,13 @@ public interface IThesisRepository {
     Page<DThesis> findByAdvisorId(Long advisorId, Pageable pageConfig);
 
     boolean existsByTitleAndCollectionId(String title, Long collectionId);
+
+    void incrementDownloadCount(Long id);
+
+    void incrementViewCount(Long id);
+
+    List<DThesis> findTopByDownloads(int limit);
+
+    Page<DThesis> search(
+            Integer year, String title, Long authorId, Long collectionId, Pageable pageConfig);
 }
