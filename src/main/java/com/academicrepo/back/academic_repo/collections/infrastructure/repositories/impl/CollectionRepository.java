@@ -5,6 +5,8 @@ import com.academicrepo.back.academic_repo.collections.domain.repositories.IColl
 import com.academicrepo.back.academic_repo.collections.infrastructure.entities.Collection;
 import com.academicrepo.back.academic_repo.collections.infrastructure.mappers.CollectionMapper;
 import com.academicrepo.back.academic_repo.collections.infrastructure.repositories.interfaces.ICollectionJpaRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -51,5 +53,12 @@ public class CollectionRepository implements ICollectionRepository {
     @Override
     public boolean existsByNameAndSubcommunityId(String name, Long subcommunityId) {
         return jpaRepository.existsByNameAndSubcommunityId(name, subcommunityId);
+    }
+
+    @Override
+    public List<DCollection> findAllActive() {
+        return jpaRepository.findByIsActiveTrue().stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toList());
     }
 }

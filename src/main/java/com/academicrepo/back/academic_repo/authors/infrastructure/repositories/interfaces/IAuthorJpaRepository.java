@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 public interface IAuthorJpaRepository extends JpaRepository<Author, Long> {
     Optional<Author> findByIdAndIsActiveTrue(Long id);
 
+    List<Author> findByIsActiveTrue();
+
     Page<Author> findByIsActiveTrue(Pageable pageable);
 
     List<Author> findByIdInAndIsActiveTrue(List<Long> ids);

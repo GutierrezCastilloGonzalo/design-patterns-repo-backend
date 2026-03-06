@@ -64,4 +64,11 @@ public class AuthorRepository implements IAuthorRepository {
     public boolean existsByOrcid(String orcid) {
         return jpaRepository.existsByOrcid(orcid);
     }
+
+    @Override
+    public List<DAuthor> findAllActive() {
+        return jpaRepository.findByIsActiveTrue().stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toList());
+    }
 }

@@ -1,6 +1,7 @@
 package com.academicrepo.back.academic_repo.collections.infrastructure.repositories.interfaces;
 
 import com.academicrepo.back.academic_repo.collections.infrastructure.entities.Collection;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ICollectionJpaRepository extends JpaRepository<Collection, Long> {
     Optional<Collection> findByIdAndIsActiveTrue(Long id);
+
+    List<Collection> findByIsActiveTrue();
 
     Page<Collection> findByIsActiveTrue(Pageable pageable);
 
